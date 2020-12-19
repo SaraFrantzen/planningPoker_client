@@ -1,10 +1,11 @@
 import React from 'react'
+import PollsIndex from './components/PollsIndex';  
 
 const App = () => {
   return (
-    <div>
-      Planning Poker
-    </div>
+    <>
+      <PollsIndex />
+    </>
   )
 }
 
