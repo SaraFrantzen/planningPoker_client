@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+
+.polls-container {
+  background: #c4e5ff;
+  background: -webkit-linear-gradient(top, #c4e5ff, #010f51);
+  background: -moz-linear-gradient(top, #c4e5ff, #010f51);
+  background: linear-gradient(to bottom, #c4e5ff, #010f51);
+  margin-top: 3em;
+}
+#pollCard {
+  margin-left: 1.6em;
+}
+#header {
+  font-family: "Rock Salt", cursive;
+  font-size: 3em;
+  padding: 0.3em;
+}

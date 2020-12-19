@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
+import PollsIndex from "./components/PollsIndex";
+import MainHeader from "./components/MainHeader";
 
 const App = () => {
   return (
-    <div>
-      Planning Poker
-    </div>
-  )
-}
+    <>
+      <MainHeader />
+      <PollsIndex />
+    </>
+  );
+};
 
-export default App
-
+export default App;
