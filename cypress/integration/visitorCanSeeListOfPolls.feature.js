@@ -23,7 +23,7 @@ describe("visitor can see all listed polls", () => {
     cy.get("[data-cy='poll-2']").within(() => {
       cy.get("[data-cy='description']").should(
         "contain",
-        "As a visitor in order to see what polls there are"
+        "As a visitor. In order to see what polls there are"
       );
     });
   });
