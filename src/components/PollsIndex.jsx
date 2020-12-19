@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
+import Polls from "../modules/polls";
 
 const PollsIndex = () => {
-    const [polls, setPolls] = useState([])
+  const [polls, setPolls] = useState([]);
 
-		useEffect(() => {
-			const getPollsIndex = async () => {
-				const response = await Polls.Index() 
-			}
-			getPollsIndex()
-		}, [])
+  useEffect(() => {
+    const getPollsIndex = async () => {
+      const fetchPolls = await Polls.index();
+      setPolls(fetchPolls.polls);
+    };
+    getPollsIndex();
+  }, []);
 
+  return (
+    <>
+      
+    </>
+  );
+};
 
-
-    return (
-        <>
-            <PollsCard />
-        </>
-    )
-}
-
-export default PollsIndex
+export default PollsIndex;
