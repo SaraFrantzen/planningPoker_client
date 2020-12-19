@@ -8,7 +8,7 @@ const PollsIndex = () => {
 
   useEffect(() => {
     const getPollsIndex = async () => {
-			const fetchPolls = await Polls.index();
+      const fetchPolls = await Polls.index();
       setPolls(fetchPolls);
     };
     getPollsIndex();
@@ -18,7 +18,7 @@ const PollsIndex = () => {
     <>
       <Container className="polls-container">
         <Grid>
-          <Grid.Row columns={4}>
+          <Grid.Row columns={3}>
             {polls.map((poll) => {
               return (
                 <>
