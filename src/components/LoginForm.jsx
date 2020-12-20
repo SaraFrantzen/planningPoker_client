@@ -18,11 +18,13 @@ const LoginForm = () => {
 
   return (
     <>
-      <Message>
-        Before you can create a new poll, you just need to login
-      </Message>
+      <Container id="login-container">
+        <Message color="purple">
+          Before you can create a new poll, you just need to login
+        </Message>
+      </Container>
       <Container>
-        <Form data-cy="login-form" onSubmit={register}>
+        <Form data-cy="login-form" onSubmit={register} id="login-form">
           <Form.Input
             icon="user"
             iconPosition="left"

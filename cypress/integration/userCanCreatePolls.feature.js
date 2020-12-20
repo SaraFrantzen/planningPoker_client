@@ -12,7 +12,7 @@ describe("User can create poll", () => {
     cy.login()
   });
 
-  xcontext("successfully created", () => {
+  context("successfully created", () => {
     beforeEach(() => {
       cy.route({
         method: "POST",

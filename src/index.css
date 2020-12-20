@@ -15,3 +15,17 @@
   font-size: 3em;
   padding: 0.3em;
 }
+#planningPoker {
+  color: white;
+}
+#login-container {
+  padding-right: 45em;
+  margin-top: 5em;
+}
+#login-form {
+  padding-top: 3em;
+  width: 35em;
+}
+#create-poll {
+  margin-top: 5em;
+}
