@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "email": "user@epidemic.com",
+    "provider": "email",
+    "uid": "user@epidemic.com",
+    "allow_password_change": false,
+    "name": "Sara"
+  }
+}
