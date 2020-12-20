@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, Form, Container, Message } from "semantic-ui-react";
+import { login } from "../modules/auth";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [message, setMessage] = useState();
+
+  const register = async (e) => {
+    e.preventDefault();
+    const response = await login(e, dispatch, history);
+    setMessage(response);
+  };
+
   return (
     <>
     <Message>Before you can create a new poll, you just need to login</Message>
       <Container>
-        <Form data-cy="login-form">
+        <Form data-cy="login-form" onSubmit={register}>
           <Form.Input
             icon="user"
             iconPosition="left"
@@ -28,6 +41,11 @@ const LoginForm = () => {
           />
           <Button data-cy="submit" content="Submit" primary />
         </Form>
+        {message && (
+          <Message data-cy="message" color="red">
+            {message}
+          </Message>
+        )}
       </Container>
     </>
   );
