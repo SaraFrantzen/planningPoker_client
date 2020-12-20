@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Form, Container } from "semantic-ui-react";
+import { Button, Form, Container, Message } from "semantic-ui-react";
 
 const LoginForm = () => {
   return (
     <>
+    <Message>Before you can create a new poll, you just need to login</Message>
       <Container>
         <Form data-cy="login-form">
           <Form.Input

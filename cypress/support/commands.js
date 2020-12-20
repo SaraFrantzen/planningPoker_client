@@ -23,7 +23,8 @@ Cypress.Commands.add("login", () => {
       uid: `user@epidemic.com`,
     },
   });
-  cy.visit("/");
+	cy.visit("/");
+	cy.get('[data-cy="createPoll"]').click();
   cy.get("[data-cy='login-form']").within(() => {
     cy.get("[data-cy='email']").type("user@epidemic.com");
     cy.get("[data-cy='password']").type("password");
