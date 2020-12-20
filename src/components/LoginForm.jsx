@@ -13,6 +13,7 @@ const LoginForm = () => {
     e.preventDefault();
     const response = await login(e, dispatch, history);
     setMessage(response);
+    history.replace({ pathname: "/create" }); 
   };
 
   return (
