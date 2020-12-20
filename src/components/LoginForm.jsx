@@ -13,12 +13,14 @@ const LoginForm = () => {
     e.preventDefault();
     const response = await login(e, dispatch, history);
     setMessage(response);
-    history.replace({ pathname: "/create" }); 
+    history.replace({ pathname: "/create" });
   };
 
   return (
     <>
-    <Message>Before you can create a new poll, you just need to login</Message>
+      <Message>
+        Before you can create a new poll, you just need to login
+      </Message>
       <Container>
         <Form data-cy="login-form" onSubmit={register}>
           <Form.Input
