@@ -12,7 +12,7 @@ describe("User can create poll", () => {
     cy.login()
   });
 
-  context("successfully created", () => {
+  xcontext("successfully created", () => {
     beforeEach(() => {
       cy.route({
         method: "POST",
@@ -31,6 +31,28 @@ describe("User can create poll", () => {
       cy.get('[data-cy="save-poll-message"]').should(
         "contain",
         "successfully saved"
+      );
+    });
+  });
+
+  context("unsuccessfully", () => {
+    beforeEach(() => {
+      cy.route({
+        method: "POST",
+        url: "http://localhost:3000/api/polls",
+        response: { message: "Title can't be blank" },
+      });
+		});
+		
+    it("unsuccessfully without title", () => {
+      cy.get('[data-cy="form-poll"]').within(() => {
+        cy.get('[data-cy="description"]').type("description");
+        cy.get('[data-cy="tasks"]').type("tasks");
+      });
+      cy.get('[data-cy="save-poll"]').contains("Save Poll").click();
+      cy.get('[data-cy="save-poll-message"]').should(
+        "contain",
+        "Title can't be blank"
       );
     });
   });

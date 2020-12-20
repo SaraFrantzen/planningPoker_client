@@ -13,7 +13,12 @@ const CreatePollsForm = () => {
   };
 
   return (
-    <Container>
+    <Container> 
+      {message && (
+        <Message data-cy="save-poll-message" color="purple">
+          {message}
+        </Message>
+      )}
       <Form data-cy="form-poll" id="create-poll" onSubmit={onSubmit}>
         <Form.Input
           fluid
@@ -40,11 +45,7 @@ const CreatePollsForm = () => {
         </Form.Button>
       </Form>
 
-      {message && (
-        <Message data-cy="save-poll-message" color="purple">
-          {message}
-        </Message>
-      )}
+     
     </Container>
   );
 };
