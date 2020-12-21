@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Polls from "../modules/polls";
 import PollsCard from "./PollsCard";
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const PollsIndex = () => {
   const [polls, setPolls] = useState([]);
@@ -16,6 +17,11 @@ const PollsIndex = () => {
 
   return (
     <>
+      <Container>
+        <Button color="blue" as={Link} to="/login" data-cy="createPoll" id="button">
+          Create new poll
+        </Button>
+      </Container>
       <Container className="polls-container">
         <Grid>
           <Grid.Row columns={3}>
