@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Form, Container, Message, Button } from "semantic-ui-react";
+import { Form, Container, Message } from "semantic-ui-react";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
@@ -25,12 +24,14 @@ const CreatePollsForm = () => {
             {message} !
             <br />
             Your poll can be viewed at:
-            <a href={`http://localhost:3001/polls/${pollId}`} id="link">
-              {" "}
-              http://localhost:3001/polls/{pollId}{" "}
+            <br />
+            <a
+              href={`https://epidemicplanningpoker.netlify.app/polls/${pollId}`}
+              id="link"
+            >
+              https://epidemicplanningpoker.netlify.app/polls/{pollId}
             </a>
             <br />
-            Copy link to share the poll with your team
           </Message>
         ) : (
           <Message data-cy="save-poll-message" color="grey" id="message">

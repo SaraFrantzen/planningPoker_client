@@ -8,6 +8,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 import configureStore from "./state/store/configureStore";
 
+
 const store = configureStore();
 window.store = store;
 
