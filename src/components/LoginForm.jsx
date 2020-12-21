@@ -19,7 +19,7 @@ const LoginForm = () => {
   return (
     <>
       <Container id="login-container">
-        <Message color="purple">
+        <Message data-cy="login-message" color="purple">
           Before you can create a new poll, you just need to login
         </Message>
       </Container>

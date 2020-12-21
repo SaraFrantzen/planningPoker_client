@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Form, Container, Message } from "semantic-ui-react";
 import Polls from "../modules/polls";
+import { useSelector } from "react-redux";
 
 const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
+  const currentUser = useSelector((state) => state.currentUser);
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -15,12 +18,17 @@ const CreatePollsForm = () => {
   return (
     <>
       <Container>
-        {message && (
-          <Message data-cy="save-poll-message" color="purple">
+        {message ? (
+          <Message data-cy="save-poll-message" color="purple" id="message">
             {message}
+          </Message>
+        ) : (
+          <Message data-cy="save-poll-message" color="grey" id="message">
+            You're logged in with: {currentUser.email}
           </Message>
         )}
       </Container>
+
       <Container>
         <Form data-cy="form-poll" id="create-poll" onSubmit={onSubmit}>
           <Form.Input

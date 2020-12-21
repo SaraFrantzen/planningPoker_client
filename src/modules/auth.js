@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === "production") {
 
 const auth = new JtockAuth({
   host: apiUrl,
-
 });
 
 const login = async (event, dispatch, history) => {
@@ -21,12 +20,10 @@ const login = async (event, dispatch, history) => {
     dispatch({
       type: "AUTHENTICATE",
       payload: {
-        authenticated: response.success,
-        currentUser: response.data,
+        currentUser: { email: response.data.email, name: response.data.name },
+        authenticate: true,
       },
     });
-
-  /*   history.replace({ pathname: "/" }); */
   } catch (error) {
     return error.response.data.errors[0];
   }
