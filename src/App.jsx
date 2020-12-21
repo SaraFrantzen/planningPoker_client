@@ -7,6 +7,7 @@ import CreatePollsForm from "./components/CreatePollsForm";
 import { useSelector } from "react-redux";
 import SinglePoll from './components/SinglePoll';
 
+
 const App = () => {
   const authenticated = useSelector((state) => state.authenticate);
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route exact path="/" component={PollsIndex} />
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/polls/:id" component={SinglePoll} />
+ 
         {authenticated ? (
           <Route exact path="/create" component={CreatePollsForm} />
         ) : (
