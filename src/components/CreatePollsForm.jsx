@@ -7,7 +7,6 @@ const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
   const currentUser = useSelector((state) => state.currentUser);
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
     let { title, description, tasks } = e.target;
