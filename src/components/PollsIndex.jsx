@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Polls from "../modules/polls";
 import PollsCard from "./PollsCard";
-import { Container, Grid, Menu, Button } from "semantic-ui-react";
+import { Container, Grid, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const PollsIndex = () => {
