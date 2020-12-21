@@ -37,3 +37,13 @@
 #button {
   font-family: "Rock Salt", cursive;
 }
+#description,
+#tasks
+{
+  font-weight: bold;
+  margin-top: 1em;
+}
+#points {
+  margin-top: 1em;
+ font-family: "Rock Salt", cursive; 
+}
