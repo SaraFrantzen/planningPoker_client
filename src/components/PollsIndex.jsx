@@ -18,7 +18,7 @@ const PollsIndex = () => {
   return (
     <>
       <Container>
-        <Button color="blue" as={Link} to="/login" data-cy="createPoll" id="button">
+        <Button color="blue" as={Link} to="/login" data-cy="createPoll" id="button" >
           Create new poll
         </Button>
       </Container>
