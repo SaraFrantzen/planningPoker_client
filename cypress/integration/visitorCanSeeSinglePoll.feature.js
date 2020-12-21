@@ -27,4 +27,27 @@ describe("Visitor can see a specific poll", () => {
       cy.get("[data-cy='points']").should("contain", "3");
     });
   });
+
+  context("unsuccessfully", () => {
+    beforeEach(() => {
+      cy.server();
+      cy.route({
+        method: "GET",
+        url: "http://localhost:3000/api/polls/1",
+        response: {
+          error: "Poll not found, try again later!",
+        },
+        status: 404,
+      });
+      cy.visit("/");
+    });
+
+    it("visitor receives error message if poll is not found", () => {
+      cy.get("[data-cy='poll-1']").click();
+      cy.get("[data-cy='error-message']").should(
+        "contain",
+        "Poll not found, try again later!"
+      );
+    });
+  });
 });

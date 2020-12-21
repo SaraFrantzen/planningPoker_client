@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
-import { Container, Card } from "semantic-ui-react";
+import { Container, Card, Message } from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
@@ -23,7 +23,11 @@ const SinglePoll = () => {
   return (
     <>
       {message ? (
-        <p data-cy="error-message">{message}</p>
+        <Container>
+          <Message data-cy="error-message" color="red">
+            {message}
+          </Message>
+        </Container>
       ) : (
         <Container>
           <Card>
