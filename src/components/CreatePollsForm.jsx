@@ -50,7 +50,7 @@ const CreatePollsForm = () => {
             data-cy="tasks"
             name="tasks"
           />
-          <Form.Button data-cy="save-poll" color="blue" floated="right">
+          <Form.Button data-cy="save-poll" color="blue" floated="right" id="button">
             Save Poll
           </Form.Button>
         </Form>

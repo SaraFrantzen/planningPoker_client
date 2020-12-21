@@ -44,7 +44,7 @@ const LoginForm = () => {
             name="password"
             data-cy="password"
           />
-          <Button data-cy="submit" content="Submit" primary />
+          <Button data-cy="submit" content="Submit" primary id="button"/>
         </Form>
         {message && (
           <Message data-cy="message" color="red">
