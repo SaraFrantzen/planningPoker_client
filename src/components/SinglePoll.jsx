@@ -34,7 +34,7 @@ const SinglePoll = () => {
               </Card.Description>
               <Card.Description data-cy="tasks">{poll.tasks}</Card.Description>
               <Card.Description data-cy="points">
-                {poll.points}
+                Voting status: {poll.points}
               </Card.Description>
             </Card.Content>
           </Card>

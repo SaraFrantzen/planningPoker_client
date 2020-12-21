@@ -6,8 +6,8 @@ describe("Visitor can see a specific poll", () => {
       url: "http://localhost:3000/api/polls",
       response: "fixture:polls.json",
     });
-	});
-	
+  });
+
   context("successfully", () => {
     beforeEach(() => {
       cy.server();
@@ -24,6 +24,7 @@ describe("Visitor can see a specific poll", () => {
         "contain",
         "Index action. Routes to that action. Polls model: title, description. Polls index in serializer."
       );
+      cy.get("[data-cy='points']").should("contain", "3");
     });
   });
 });

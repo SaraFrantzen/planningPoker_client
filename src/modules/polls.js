@@ -6,6 +6,16 @@ const Polls = {
     return result.data.polls;
   },
 
+  async show(pollId) {
+    try {
+      
+      let result = await axios.get(`/polls/${pollId}`);
+      return result.data.poll;
+    } catch (error) {
+      return error.response.data.error;
+    }
+  },
+
   async create(title, description, tasks) {
     let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
 

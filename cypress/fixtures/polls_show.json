@@ -4,6 +4,6 @@
     "title": "API can provide polls index",
     "description": "As an API. In order to provide a list of polls in DB. I would like to provide an index endpoint for polls",
     "tasks": "Index action. Routes to that action. Polls model: title, description. Polls index in serializer.",
-    "points": []
+    "points": [3]
   }
 }
