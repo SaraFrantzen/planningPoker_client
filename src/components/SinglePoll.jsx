@@ -10,6 +10,8 @@ const SinglePoll = () => {
   const { id } = useParams();
   const [message, setMessage] = useState("");
   const authenticated = useSelector((state) => state.authenticate);
+  const currentUser = useSelector((state) => state.currentUser);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -23,6 +25,17 @@ const SinglePoll = () => {
     getSinglePoll();
   }, [id]);
 
+  const joinHandler = async () => {
+    debugger;
+    let userId = currentUser.email;
+    let response = await Polls.join(id, userId);
+    if (response.message) {
+      setJoined(true);
+    } else {
+      setMessage(response);
+    }
+  };
+
   return (
     <>
       {message ? (
@@ -35,6 +48,7 @@ const SinglePoll = () => {
         <Container>
           <Card id="singlePoll-card">
             <Card.Content>
+              {joined && <Message data-cy="join-poll-message">You are joined to this poll</Message>}
               <Card.Header data-cy="title">{poll.title}</Card.Header>
 
               <Card.Content id="description">Description</Card.Content>
@@ -47,16 +61,27 @@ const SinglePoll = () => {
 
               <Card.Content id="points">Poll status</Card.Content>
               <Card.Content data-cy="points">{poll.points}</Card.Content>
-              {authenticated ? (
-                <Button as={Link} to="/" id="button">
+              {authenticated && !joined && (
+                <Button
+                  onClick={() => joinHandler()}
+                  data-cy="join-poll"
+                  id="button"
+                >
                   Join this poll
                 </Button>
-              ) : (
+              )}
+              {!authenticated && (
                 <Button as={Link} to="/login" id="button">
                   Join this poll
                 </Button>
               )}
+
+              <Card.Content id="points">
+                Participants of this poll
+              </Card.Content>
             </Card.Content>
+
+            <Card.Content data-cy="team">{poll.team}</Card.Content>
           </Card>
         </Container>
       )}

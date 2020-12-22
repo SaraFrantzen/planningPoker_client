@@ -16,7 +16,7 @@ const MainHeader = () => {
           {authenticated ? (
             <p>You're logged in with: {currentUser.email}</p>
           ) : (
-            <Menu.Item as={Link} to="/login" data-cy="createPoll">
+            <Menu.Item as={Link} to="/login" data-cy="login">
               Login
             </Menu.Item>
           )}
