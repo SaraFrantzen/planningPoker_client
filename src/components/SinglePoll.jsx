@@ -27,8 +27,21 @@ const SinglePoll = () => {
     getSinglePoll();
   }, [id]);
 
+  useEffect(() => {
+    const teamChecker = async () => {
+      try {
+        if (poll.team.includes(currentUser.email)) {
+          setJoined(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    teamChecker();
+  }, [currentUser, poll]);
+
   const joinHandler = async () => {
-    debugger;
     let userId = currentUser.email;
     let response = await Polls.join(id, userId);
     if (response.message) {
@@ -83,15 +96,18 @@ const SinglePoll = () => {
                 </Button>
               )}
               {!authenticated && (
-                <Button as={Link} to="/login" id="button">
+                <Button basic as={Link} to="/login" id="button" color="green">
                   Join this poll
                 </Button>
               )}
-
+            </Card.Content>
+            <Card.Content>
               <Button
+                basic
                 onClick={() => ViewTeamHandler()}
                 data-cy="view-participants"
                 id="button"
+                color="purple"
               >
                 View participants
               </Button>
