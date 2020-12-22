@@ -48,9 +48,8 @@ describe("User can join a poll", () => {
     });
 
     it("visitor receives error message if poll is not found", () => {
-  
       cy.get('[data-cy="join-poll"]').click();
-      debugger
+      debugger;
       cy.get("[data-cy='error-message']").should(
         "contain",
         "You already joined this poll"
