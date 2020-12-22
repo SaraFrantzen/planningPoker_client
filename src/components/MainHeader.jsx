@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Segment, Menu, Button } from "semantic-ui-react";
+import { Header, Segment, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 const MainHeader = () => {

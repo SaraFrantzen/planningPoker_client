@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const PollsIndex = () => {
   const [polls, setPolls] = useState([]);
   const authenticated = useSelector((state) => state.authenticate);
-  const currentUser = useSelector((state) => state.currentUser);
+
 
   useEffect(() => {
     const getPollsIndex = async () => {

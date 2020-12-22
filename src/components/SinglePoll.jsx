@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Card, Message, Button } from "semantic-ui-react";
+import { Container, Card, Message, Button, List } from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
@@ -12,6 +12,8 @@ const SinglePoll = () => {
   const authenticated = useSelector((state) => state.authenticate);
   const currentUser = useSelector((state) => state.currentUser);
   const [joined, setJoined] = useState(false);
+  const [viewTeam, setViewTeam] = useState(false);
+  const [listTeam, setListTeam] = useState();
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -36,6 +38,12 @@ const SinglePoll = () => {
     }
   };
 
+  const ViewTeamHandler = async () => {
+    let list = poll.team.map((team) => <li>{team}</li>);
+    setListTeam(list);
+    setViewTeam(true);
+  };
+
   return (
     <>
       {message ? (
@@ -48,7 +56,11 @@ const SinglePoll = () => {
         <Container>
           <Card id="singlePoll-card">
             <Card.Content>
-              {joined && <Message data-cy="join-poll-message">You are joined to this poll</Message>}
+              {joined && (
+                <Message data-cy="join-poll-message">
+                  You are joined to this poll
+                </Message>
+              )}
               <Card.Header data-cy="title">{poll.title}</Card.Header>
 
               <Card.Content id="description">Description</Card.Content>
@@ -76,12 +88,23 @@ const SinglePoll = () => {
                 </Button>
               )}
 
-              <Card.Content id="points">
-                Participants of this poll
-              </Card.Content>
+              <Button
+                onClick={() => ViewTeamHandler()}
+                data-cy="view-participants"
+                id="button"
+              >
+                View participants
+              </Button>
+              {viewTeam && (
+                <Card.Content>
+                  <List>
+                    <List.Item>
+                      <List.Content data-cy="team">{listTeam}</List.Content>
+                    </List.Item>
+                  </List>
+                </Card.Content>
+              )}
             </Card.Content>
-
-            <Card.Content data-cy="team">{poll.team}</Card.Content>
           </Card>
         </Container>
       )}
