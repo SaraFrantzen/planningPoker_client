@@ -37,7 +37,6 @@ const SinglePoll = () => {
         console.log(error);
       }
     };
-
     teamChecker();
   }, [currentUser, poll]);
 
