@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
-import { Container, Card, Message, } from "semantic-ui-react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Card, Message, Button, List } from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
   const { id } = useParams();
   const [message, setMessage] = useState("");
+  const authenticated = useSelector((state) => state.authenticate);
+  const currentUser = useSelector((state) => state.currentUser);
+  const [joined, setJoined] = useState(false);
+  const [viewTeam, setViewTeam] = useState(false);
+  const [listTeam, setListTeam] = useState();
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -20,6 +27,35 @@ const SinglePoll = () => {
     getSinglePoll();
   }, [id]);
 
+  useEffect(() => {
+    const teamChecker = async () => {
+      try {
+        if (poll.team.includes(currentUser.email)) {
+          setJoined(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    teamChecker();
+  }, [currentUser, poll]);
+
+  const joinHandler = async () => {
+    let userId = currentUser.email;
+    let response = await Polls.join(id, userId);
+    if (response.message) {
+      setJoined(true);
+    } else {
+      setMessage(response);
+    }
+  };
+
+  const ViewTeamHandler = async () => {
+    let list = poll.team.map((team) => <li>{team}</li>);
+    setListTeam(list);
+    setViewTeam(true);
+  };
+
   return (
     <>
       {message ? (
@@ -30,8 +66,13 @@ const SinglePoll = () => {
         </Container>
       ) : (
         <Container>
-          <Card>
+          <Card id="singlePoll-card">
             <Card.Content>
+              {joined && (
+                <Message data-cy="join-poll-message">
+                  You are joined to this poll
+                </Message>
+              )}
               <Card.Header data-cy="title">{poll.title}</Card.Header>
 
               <Card.Content id="description">Description</Card.Content>
@@ -42,12 +83,42 @@ const SinglePoll = () => {
               <Card.Content id="tasks">Tasks </Card.Content>
               <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
 
-              <Card.Content id="points">
-                Poll status 
-              </Card.Content>
-							<Card.Content data-cy="points">
-								{poll.points}
-							</Card.Content>
+              <Card.Content id="points">Poll status</Card.Content>
+              <Card.Content data-cy="points">{poll.points}</Card.Content>
+              {authenticated && !joined && (
+                <Button
+                  onClick={() => joinHandler()}
+                  data-cy="join-poll"
+                  id="button"
+                >
+                  Join this poll
+                </Button>
+              )}
+              {!authenticated && (
+                <Button basic as={Link} to="/login" id="button" color="green">
+                  Join this poll
+                </Button>
+              )}
+            </Card.Content>
+            <Card.Content>
+              <Button
+                basic
+                onClick={() => ViewTeamHandler()}
+                data-cy="view-participants"
+                id="button"
+                color="purple"
+              >
+                View participants
+              </Button>
+              {viewTeam && (
+                <Card.Content>
+                  <List>
+                    <List.Item>
+                      <List.Content data-cy="team">{listTeam}</List.Content>
+                    </List.Item>
+                  </List>
+                </Card.Content>
+              )}
             </Card.Content>
           </Card>
         </Container>

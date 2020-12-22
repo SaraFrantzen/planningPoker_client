@@ -13,14 +13,14 @@ const LoginForm = () => {
     e.preventDefault();
     const response = await login(e, dispatch, history);
     setMessage(response);
-    history.replace({ pathname: "/create" });
+    history.replace({ pathname: "/" });
   };
 
   return (
     <>
       <Container id="login-container">
         <Message data-cy="login-message" color="purple">
-          Before you can create a new poll, you just need to login
+          Before you can create or join a poll, you just need to login
         </Message>
       </Container>
       <Container>
@@ -44,7 +44,7 @@ const LoginForm = () => {
             name="password"
             data-cy="password"
           />
-          <Button data-cy="submit" content="Login" primary id="button"/>
+          <Button data-cy="submit" content="Login" primary id="button" />
         </Form>
         {message && (
           <Message data-cy="message" color="red">

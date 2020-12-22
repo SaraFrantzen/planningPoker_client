@@ -8,8 +8,8 @@ describe("User can create poll", () => {
     });
 
     cy.visit("/");
-    cy.get('[data-cy="createPoll"]').click();
     cy.login();
+    cy.get('[data-cy="createPoll"]').click();
   });
 
   context("successfully created", () => {
@@ -64,7 +64,7 @@ describe("User can create poll", () => {
 
     it("unsuccessfully without title", () => {
       cy.get('[data-cy="login-message"]').contains(
-        "Before you can create a new poll, you just need to login"
+        "Before you can create or join a poll, you just need to login"
       );
     });
   });

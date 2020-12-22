@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Form, Container, Message } from "semantic-ui-react";
 import Polls from "../modules/polls";
-import { useSelector } from "react-redux";
 
 const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
-  const currentUser = useSelector((state) => state.currentUser);
   const [pollId, setPollId] = useState();
 
   const onSubmit = async (e) => {
@@ -19,7 +17,7 @@ const CreatePollsForm = () => {
   return (
     <>
       <Container>
-        {message ? (
+        {message && (
           <Message data-cy="save-poll-message" color="purple" id="message">
             {message} !
             <br />
@@ -32,10 +30,6 @@ const CreatePollsForm = () => {
               https://epidemicplanningpoker.netlify.app/polls/{pollId}
             </a>
             <br />
-          </Message>
-        ) : (
-          <Message data-cy="save-poll-message" color="grey" id="message">
-            You're logged in with: {currentUser.email}
           </Message>
         )}
       </Container>

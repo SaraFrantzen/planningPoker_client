@@ -15,6 +15,14 @@
   font-size: 3em;
   padding: 0.3em;
 }
+#login {
+  font-size: 0.6em;
+  margin-left: 18em;
+  color: white;
+}
+#login-txt {
+  font-size: 0.4em;
+}
 #planningPoker {
   color: white;
 }
@@ -50,4 +58,7 @@
 #link {
   color: black;
   font-family: "Rock Salt", cursive; 
+}
+#singlePoll-card {
+  margin-top: 10em;
 }

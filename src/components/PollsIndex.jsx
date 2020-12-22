@@ -3,9 +3,12 @@ import Polls from "../modules/polls";
 import PollsCard from "./PollsCard";
 import { Container, Grid, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PollsIndex = () => {
   const [polls, setPolls] = useState([]);
+  const authenticated = useSelector((state) => state.authenticate);
+
 
   useEffect(() => {
     const getPollsIndex = async () => {
@@ -18,9 +21,27 @@ const PollsIndex = () => {
   return (
     <>
       <Container>
-        <Button color="blue" as={Link} to="/login" data-cy="createPoll" id="button" >
-          Create new poll
-        </Button>
+        {authenticated ? (
+          <Button
+            color="blue"
+            as={Link}
+            to="/create"
+            data-cy="createPoll"
+            id="button"
+          >
+            Create new poll
+          </Button>
+        ) : (
+          <Button
+            color="blue"
+            as={Link}
+            to="/login"
+            data-cy="createPoll"
+            id="button"
+          >
+            Create new poll
+          </Button>
+        )}
       </Container>
       <Container className="polls-container">
         <Grid>
