@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
-import { Container, Card, Message, } from "semantic-ui-react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Card, Message, Button } from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
   const { id } = useParams();
   const [message, setMessage] = useState("");
+  const authenticated = useSelector((state) => state.authenticate);
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -30,7 +33,7 @@ const SinglePoll = () => {
         </Container>
       ) : (
         <Container>
-          <Card>
+          <Card id="singlePoll-card">
             <Card.Content>
               <Card.Header data-cy="title">{poll.title}</Card.Header>
 
@@ -42,12 +45,17 @@ const SinglePoll = () => {
               <Card.Content id="tasks">Tasks </Card.Content>
               <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
 
-              <Card.Content id="points">
-                Poll status 
-              </Card.Content>
-							<Card.Content data-cy="points">
-								{poll.points}
-							</Card.Content>
+              <Card.Content id="points">Poll status</Card.Content>
+              <Card.Content data-cy="points">{poll.points}</Card.Content>
+              {authenticated ? (
+                <Button as={Link} to="/" id="button">
+                  Join this poll
+                </Button>
+              ) : (
+                <Button as={Link} to="/login" id="button">
+                  Join this poll
+                </Button>
+              )}
             </Card.Content>
           </Card>
         </Container>

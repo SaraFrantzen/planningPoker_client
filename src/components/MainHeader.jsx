@@ -1,8 +1,10 @@
 import React from "react";
-import { Header, Segment, Menu } from "semantic-ui-react";
+import { Header, Segment, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const MainHeader = () => {
+  const authenticated = useSelector((state) => state.authenticate);
+  const currentUser = useSelector((state) => state.currentUser);
   return (
     <>
       <Segment inverted>
@@ -10,6 +12,14 @@ const MainHeader = () => {
           <Menu.Item as={Link} to="/" id="planningPoker">
             Planning Poker
           </Menu.Item>
+
+          {authenticated ? (
+            <p>You're logged in with: {currentUser.email}</p>
+          ) : (
+            <Menu.Item as={Link} to="/login" data-cy="createPoll">
+              Login
+            </Menu.Item>
+          )}
         </Header>
       </Segment>
     </>

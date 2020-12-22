@@ -20,7 +20,7 @@ const LoginForm = () => {
     <>
       <Container id="login-container">
         <Message data-cy="login-message" color="purple">
-          Before you can create or join a poll, you just need to login
+          Before you can join or create a poll, you just need to login
         </Message>
       </Container>
       <Container>
