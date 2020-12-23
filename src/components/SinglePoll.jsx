@@ -3,7 +3,14 @@ import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Card, Message, Button, List, Form} from "semantic-ui-react";
+import {
+  Container,
+  Card,
+  Message,
+  Button,
+  List,
+  Form,
+} from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
@@ -15,6 +22,7 @@ const SinglePoll = () => {
   const [viewTeam, setViewTeam] = useState(false);
   const [listTeam, setListTeam] = useState();
   const [selectedPoints, setSelectedPoints] = useState();
+  const [voteMessage, setVoteMessage] = useState("");
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -61,23 +69,26 @@ const SinglePoll = () => {
     setSelectedPoints(value);
   };
 
-  const voteHandler = async (e) => {
-    e.preventDefault();
-    let {} = e.target;
-    const response = await Polls.vote(selectedPoints);
-    setMessage(response);
+  const voteHandler = async () => {
+    let points = selectedPoints;
+    const response = await Polls.vote(id, points);
+    setVoteMessage(response);
   };
 
   const options = [
-    { key: "m", text: "0", value: "0" },
-    { key: "m", text: "1", value: "1" },
-    { key: "f", text: "2", value: "2" },
-    { key: "o", text: "3", value: "3" },
+    { key: "0", text: "0", value: 0 },
+    { key: "1", text: "1", value: 1 },
+    { key: "2", text: "2", value: 2 },
+    { key: "3", text: "3", value: 3 },
   ];
-  
 
   return (
     <>
+      {voteMessage && (
+        <Message data-cy="vote-message" color="green">
+          {voteMessage}
+        </Message>
+      )}
       {message ? (
         <Container>
           <Message data-cy="error-message" color="red">
@@ -115,22 +126,22 @@ const SinglePoll = () => {
                 </Button>
               ) : (
                 <>
-                <Form.Select
-                fluid
-                label="points"
-                options={options}
-                onChange={(e, data) => {
-                  handlePointsChange(data.value);
-                }}
-                data-cy="points"
-              />
-                <Button
-                  data-cy="vote"
-                  id="button"
-                  onClick={() => voteHandler()}
-                >
-                  Vote
-                </Button>
+                  <Form.Select
+                    fluid
+                    label="points"
+                    options={options}
+                    onChange={(e, value) => {
+                      handlePointsChange(value.value);
+                    }}
+                    data-cy="points"
+                  />
+                  <Button
+                    data-cy="vote"
+                    id="button"
+                    onClick={() => voteHandler()}
+                  >
+                    Vote
+                  </Button>
                 </>
               )}
               {!authenticated && (
