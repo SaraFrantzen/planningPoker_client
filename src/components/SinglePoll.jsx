@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Card, Message, Button, List } from "semantic-ui-react";
+import { Container, Card, Message, Button, List, Form} from "semantic-ui-react";
 
 const SinglePoll = () => {
   const [poll, setPoll] = useState({});
@@ -14,6 +14,7 @@ const SinglePoll = () => {
   const [joined, setJoined] = useState(false);
   const [viewTeam, setViewTeam] = useState(false);
   const [listTeam, setListTeam] = useState();
+  const [selectedPoints, setSelectedPoints] = useState();
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -56,6 +57,25 @@ const SinglePoll = () => {
     setViewTeam(true);
   };
 
+  const handlePointsChange = (value) => {
+    setSelectedPoints(value);
+  };
+
+  const voteHandler = async (e) => {
+    e.preventDefault();
+    let {} = e.target;
+    const response = await Polls.vote(selectedPoints);
+    setMessage(response);
+  };
+
+  const options = [
+    { key: "m", text: "0", value: "0" },
+    { key: "m", text: "1", value: "1" },
+    { key: "f", text: "2", value: "2" },
+    { key: "o", text: "3", value: "3" },
+  ];
+  
+
   return (
     <>
       {message ? (
@@ -85,7 +105,7 @@ const SinglePoll = () => {
 
               <Card.Content id="points">Poll status</Card.Content>
               <Card.Content data-cy="points">{poll.points}</Card.Content>
-              {authenticated && !joined && (
+              {authenticated && !joined ? (
                 <Button
                   onClick={() => joinHandler()}
                   data-cy="join-poll"
@@ -93,6 +113,25 @@ const SinglePoll = () => {
                 >
                   Join this poll
                 </Button>
+              ) : (
+                <>
+                <Form.Select
+                fluid
+                label="points"
+                options={options}
+                onChange={(e, data) => {
+                  handlePointsChange(data.value);
+                }}
+                data-cy="points"
+              />
+                <Button
+                  data-cy="vote"
+                  id="button"
+                  onClick={() => voteHandler()}
+                >
+                  Vote
+                </Button>
+                </>
               )}
               {!authenticated && (
                 <Button basic as={Link} to="/login" id="button" color="green">
