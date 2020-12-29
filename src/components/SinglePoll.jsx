@@ -23,6 +23,8 @@ const SinglePoll = () => {
   const [listTeam, setListTeam] = useState();
   const [selectedPoints, setSelectedPoints] = useState();
   const [voteMessage, setVoteMessage] = useState("");
+  const [status, setStatus] = useState([]);
+  const [votes, setVotes] = useState({});
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -71,8 +73,16 @@ const SinglePoll = () => {
 
   const voteHandler = async () => {
     let points = selectedPoints;
-    const response = await Polls.vote(id, points);
-    setVoteMessage(response);
+    const response = await Polls.vote(id, points, votes);
+
+    if (response.message === "successfully voted") {
+      setVoteMessage(
+        `You ${response.message} ${response.votes.points} in this poll`
+      );
+      setStatus(response.points);
+    } else {
+      setMessage(response.message);
+    }
   };
 
   const options = [
@@ -84,6 +94,13 @@ const SinglePoll = () => {
 
   return (
     <>
+    {authenticated && !joined && (
+      <>
+      <Container>
+        <h1>You need to join the poll to be able to vote</h1>
+      </Container>
+      </>
+    )}
       {voteMessage && (
         <Message data-cy="vote-message" color="green">
           {voteMessage}
@@ -114,9 +131,13 @@ const SinglePoll = () => {
               <Card.Content id="tasks">Tasks </Card.Content>
               <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
 
-              <Card.Content id="points">Poll status</Card.Content>
-              <Card.Content data-cy="points">{poll.points}</Card.Content>
-              {authenticated && !joined ? (
+              {status && (
+                <>
+                  <Card.Content id="points">Poll status</Card.Content>
+                  <Card.Content data-cy="points">{status}</Card.Content>
+                </>
+              )}
+              {authenticated && !joined && (
                 <Button
                   onClick={() => joinHandler()}
                   data-cy="join-poll"
@@ -124,7 +145,8 @@ const SinglePoll = () => {
                 >
                   Join this poll
                 </Button>
-              ) : (
+              )}
+              {authenticated && joined && (
                 <>
                   <Form.Select
                     fluid

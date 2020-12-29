@@ -1,4 +1,4 @@
-describe("User can join a poll", () => {
+describe("User can vote", () => {
   beforeEach(() => {
     cy.server();
     cy.route({
@@ -37,6 +37,28 @@ describe("User can join a poll", () => {
       cy.get('[data-cy="vote-message"]').should(
         "contain",
         "successfully voted"
+      );
+    });
+  });
+
+  context("unsuccessfully", () => {
+    beforeEach(() => {
+      cy.server();
+      cy.route({
+        method: "PUT",
+        url: "http://localhost:3000/api/polls/1",
+        response: {
+          error: "You already voted in this poll",
+        },
+        status: 404,
+      });
+    });
+
+    it("visitor receives error message if already voted", () => {
+      cy.get('[data-cy="vote"]').click();
+      cy.get("[data-cy='error-message']").should(
+        "contain",
+        "You already voted in this poll"
       );
     });
   });

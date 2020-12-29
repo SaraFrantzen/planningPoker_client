@@ -62,18 +62,21 @@ const Polls = {
 
   async vote(id, points) {
     let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
+    let email = headers.uid;
+
     try {
       let response = await axios.put(
         `/polls/${id}`,
         {
           points: points,
+          votes: { email, points },
         },
         {
           headers: headers,
         }
       );
-      debugger
-      return response.data.message;
+
+      return response.data;
     } catch (error) {
       return error.response.data.error;
     }
