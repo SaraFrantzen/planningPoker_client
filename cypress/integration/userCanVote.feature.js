@@ -38,6 +38,7 @@ describe("User can vote", () => {
         "contain",
         "You successfully voted 0 in this poll"
       );
+      cy.get("[data-cy='points']").should("contain", "0");
     });
   });
 

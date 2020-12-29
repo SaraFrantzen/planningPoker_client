@@ -31,6 +31,7 @@ const SinglePoll = () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
+        setStatus(response.points);
       } else {
         setMessage(response);
       }
@@ -79,6 +80,7 @@ const SinglePoll = () => {
         `You ${response.message} ${response.votes.points} in this poll`
       );
       setStatus(response.points);
+      setVotes(response.votes)
     } else {
       setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
     }
@@ -93,23 +95,23 @@ const SinglePoll = () => {
 
   return (
     <>
-    {authenticated && !joined && (
-      <>
-      <Container>
-        <h1>You need to join the poll to be able to vote</h1>
-      </Container>
-      </>
-    )}
+      {authenticated && !joined && (
+        <>
+          <Container>
+            <h1>You need to join the poll to be able to vote</h1>
+          </Container>
+        </>
+      )}
       {voteMessage && (
-        <Message data-cy="vote-message" color="green">
-          {voteMessage}
-        </Message>
+        <Container>
+          <Message data-cy="vote-message" id="message" color="green">
+            {voteMessage}
+          </Message>
+        </Container>
       )}
       {message ? (
-        <Container>
-          <Message data-cy="error-message" color="red">
-            {message}
-          </Message>
+        <Container data-cy="error-message">
+          <Message color="red">{message}</Message>
         </Container>
       ) : (
         <Container>
@@ -130,7 +132,7 @@ const SinglePoll = () => {
               <Card.Content id="tasks">Tasks </Card.Content>
               <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
 
-              {status && (
+              {status !== [] && (
                 <>
                   <Card.Content id="points">Poll status</Card.Content>
                   <Card.Content data-cy="points">{status}</Card.Content>
