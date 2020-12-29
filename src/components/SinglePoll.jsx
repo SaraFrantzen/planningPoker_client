@@ -74,14 +74,13 @@ const SinglePoll = () => {
   const voteHandler = async () => {
     let points = selectedPoints;
     const response = await Polls.vote(id, points, votes);
-
     if (response.message === "successfully voted") {
       setVoteMessage(
         `You ${response.message} ${response.votes.points} in this poll`
       );
       setStatus(response.points);
     } else {
-      setMessage(response.message);
+      setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
     }
   };
 

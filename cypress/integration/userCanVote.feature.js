@@ -27,16 +27,16 @@ describe("User can vote", () => {
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: { message: "successfully voted" },
+        response: "fixture:polls_update.json",
       });
     });
 
     it("user can vote", () => {
-      cy.get('[data-cy="points"]').contains(2).click({ force: true });
+      cy.get('[data-cy="points"]').contains(0).click({ force: true });
       cy.get('[data-cy="vote"]').click();
       cy.get('[data-cy="vote-message"]').should(
         "contain",
-        "successfully voted"
+        "You successfully voted 0 in this poll"
       );
     });
   });
@@ -48,17 +48,17 @@ describe("User can vote", () => {
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
         response: {
-          error: "You already voted in this poll",
+          error: "Ooops. Unauthorized, You need to sign in to be able to vote",
         },
-        status: 404,
+        status: 401,
       });
     });
 
-    it("visitor receives error message if already voted", () => {
+    it("visitor receives error message if user-session broke", () => {
       cy.get('[data-cy="vote"]').click();
       cy.get("[data-cy='error-message']").should(
         "contain",
-        "You already voted in this poll"
+        "Ooops. Unauthorized, You need to sign in to be able to vote"
       );
     });
   });
