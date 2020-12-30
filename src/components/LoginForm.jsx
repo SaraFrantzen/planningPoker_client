@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button, Form, Container, Message } from "semantic-ui-react";
+import { Button, Form, Container, Message, Divider } from "semantic-ui-react";
 import { login } from "../modules/auth";
 
 const LoginForm = () => {
@@ -19,10 +19,12 @@ const LoginForm = () => {
   return (
     <>
       <Container id="login-container">
-        <Message data-cy="login-message" color="purple">
+        <h1 data-cy="login-message">
           Before you can create or join a poll, you just need to login
-        </Message>
+        </h1>
+        <Divider />
       </Container>
+
       <Container>
         <Form data-cy="login-form" onSubmit={register} id="login-form">
           <Form.Input
@@ -44,7 +46,13 @@ const LoginForm = () => {
             name="password"
             data-cy="password"
           />
-          <Button data-cy="submit" content="Login" primary id="button" />
+          <Button
+            data-cy="submit"
+            content="Login"
+            id="button"
+            basic
+            color="red"
+          />
         </Form>
         {message && (
           <Message data-cy="message" color="red">

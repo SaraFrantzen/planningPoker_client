@@ -1,11 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
 
 .polls-container {
-  background: #c4e5ff;
-  background: -webkit-linear-gradient(top, #c4e5ff, #010f51);
-  background: -moz-linear-gradient(top, #c4e5ff, #010f51);
-  background: linear-gradient(to bottom, #c4e5ff, #010f51);
   margin-top: 3em;
+  width: 10em;
 }
 #pollCard {
   margin-left: 1.6em;
@@ -42,12 +39,31 @@
   margin-top: 5em;
   width: 35em;
 }
-#button {
+#button,
+#form-input {
   font-family: "Rock Salt", cursive;
+}
+#create-button {
+  font-family: "Rock Salt", cursive;
+  margin-left: 2em;
+  margin-top: 1em;
+}
+#back-button {
+  font-family: "Rock Salt", cursive;
+  margin-top: 5em;
 }
 #vote-select {
   font-family: "Rock Salt", cursive;
   margin-bottom: 1em;
+  margin-left: 8em;
+}
+#vote-button {
+  font-family: "Rock Salt", cursive;
+  margin-left: 16em;
+}
+#join-button {
+  margin-left: 1em;
+  font-family: "Rock Salt", cursive;
 }
 #description,
 #tasks {
@@ -60,16 +76,30 @@
 }
 #poll-status {
   margin-top: 1em;
+  margin-left: 1em;
   font-family: "Rock Salt", cursive;
   font-size: 2em;
 }
 #link {
-  color: black;
+  color: white;
   font-family: "Rock Salt", cursive;
+  font-size: 1em;
 }
 #singlePoll-card {
-  margin-top: 10em;
+  margin-top: 5em;
 }
-#column-2 {
-  margin-top: 10em;
+
+#image2 {
+  margin-right: 10em;
+  margin-top: 20em;
+}
+#ess2 {
+  margin-left: 10em;
+  margin-top: 6em;
+}
+#cards3 {
+  margin-right: 4em;
+}
+#statistics {
+  margin-left: 3em;
 }

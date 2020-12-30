@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import cards3 from "../images/cards3.jpg";
 import {
   Container,
   Card,
@@ -12,6 +13,8 @@ import {
   Form,
   Grid,
   Statistic,
+  Image,
+  Divider,
 } from "semantic-ui-react";
 
 const SinglePoll = () => {
@@ -128,11 +131,21 @@ const SinglePoll = () => {
     <>
       {authenticated && !joined && (
         <>
-          <Container>
+          <Container id="header">
             <h1>You need to join the poll to be able to vote</h1>
+            <Divider />
           </Container>
         </>
       )}
+      {!authenticated && (
+        <>
+          <Container id="header">
+            <h1>You need to login to be able to vote</h1>
+            <Divider />
+          </Container>
+        </>
+      )}
+      <Image src={cards3} size="large" floated="right" id="cards3" />
       {voteMessage && (
         <Container>
           <Message data-cy="vote-message" id="message" color="green">
@@ -140,158 +153,157 @@ const SinglePoll = () => {
           </Message>
         </Container>
       )}
-      {message ? (
+      {message && (
         <Container data-cy="error-message">
-          <Message color="red">{message}</Message>
+          <Message color="red" id="message">
+            {message}
+          </Message>
         </Container>
-      ) : (
-        <Container>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={5} id="column-1">
-                <Card id="singlePoll-card">
-                  <Card.Content id="poll-status">Feature</Card.Content>
-                  <Card.Content>
-                    <Card.Header data-cy="title">{poll.title}</Card.Header>
-
-                    <Card.Content id="description">Description</Card.Content>
-                    <Card.Content data-cy="description">
-                      {poll.description}{" "}
-                    </Card.Content>
-
-                    <Card.Content id="tasks">Tasks </Card.Content>
-                    <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-
-              <Grid.Column width={5}>
-                <Card fluid id="column-2">
-                  <Card.Content>
-                    {status !== [] && (
-                      <Card.Content id="poll-status">Poll status</Card.Content>
-                    )}
-                    {joined && (
-                      <Message data-cy="join-poll-message">
-                        You are joined to this poll
-                      </Message>
-                    )}
-                  </Card.Content>
-                  <Card.Content data-cy="points">
-                    <Statistic.Group size="mini">
-                      <Statistic color="red">
-                        <Statistic.Value>points</Statistic.Value>
-                        <Statistic.Label>No of votes</Statistic.Label>
-                      </Statistic>
-                      <Statistic color="red">
-                        <Statistic.Value>0</Statistic.Value>
-                        <Statistic.Label data-cy="points-0">
-                          {status0}
-                        </Statistic.Label>
-                      </Statistic>
-                      <Statistic color="red">
-                        <Statistic.Value>1</Statistic.Value>
-                        <Statistic.Label data-cy="points-1">
-                          {status1}
-                        </Statistic.Label>
-                      </Statistic>
-                      <Statistic color="red">
-                        <Statistic.Value>2</Statistic.Value>
-                        <Statistic.Label data-cy="points-2">
-                          {status2}
-                        </Statistic.Label>
-                      </Statistic>
-                      <Statistic color="red">
-                        <Statistic.Value>3</Statistic.Value>
-                        <Statistic.Label data-cy="points-3">
-                          {status3}
-                        </Statistic.Label>
-                      </Statistic>
-                    </Statistic.Group>
+      )}
+      <Container>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={6} id="column-1">
+              <Card id="singlePoll-card" color="red">
+                <Card.Content id="poll-status">Feature</Card.Content>
+                <Card.Content>
+                  <Card.Header data-cy="title">{poll.title}</Card.Header>
+                  <Divider />
+                  <Card.Content id="description">Description</Card.Content>
+                  <Card.Content data-cy="description">
+                    {poll.description}{" "}
                   </Card.Content>
 
-                  <>
-                    {authenticated && joined && (
-                      <Card.Content>
-                        <Form.Select
-                          id="vote-select"
-                          options={options}
-                          onChange={(e, value) => {
-                            handlePointsChange(value.value);
-                          }}
-                          data-cy="points"
-                        />
-                        <Button
-                          basic
-                          data-cy="vote"
-                          id="button"
-                          color="red"
-                          onClick={() => voteHandler()}
-                        >
-                          Vote
-                        </Button>
-                      </Card.Content>
-                    )}
-                  </>
+                  <Card.Content id="tasks">Tasks </Card.Content>
+                  <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+
+            <Grid.Column width={6}>
+              <Card fluid id="singlePoll-card" color="red">
+                <Card.Content>
+                  {joined && (
+                    <Message data-cy="join-poll-message" color="black">
+                      You are joined to this poll
+                    </Message>
+                  )}
+                  {status !== [] && (
+                    <Card.Content id="poll-status">Poll status</Card.Content>
+                  )}
+                </Card.Content>
+                <Card.Content data-cy="points">
+                  <Statistic.Group size="mini">
+                    <Statistic color="red" id="statistics">
+                      <Statistic.Value>points</Statistic.Value>
+                      <Statistic.Label>No of votes</Statistic.Label>
+                    </Statistic>
+                    <Statistic color="red">
+                      <Statistic.Value>0</Statistic.Value>
+                      <Statistic.Label data-cy="points-0">
+                        {status0}
+                      </Statistic.Label>
+                    </Statistic>
+                    <Statistic color="red">
+                      <Statistic.Value>1</Statistic.Value>
+                      <Statistic.Label data-cy="points-1">
+                        {status1}
+                      </Statistic.Label>
+                    </Statistic>
+                    <Statistic color="red">
+                      <Statistic.Value>2</Statistic.Value>
+                      <Statistic.Label data-cy="points-2">
+                        {status2}
+                      </Statistic.Label>
+                    </Statistic>
+                    <Statistic color="red">
+                      <Statistic.Value>3</Statistic.Value>
+                      <Statistic.Label data-cy="points-3">
+                        {status3}
+                      </Statistic.Label>
+                    </Statistic>
+                  </Statistic.Group>
+
+                  <Divider />
+
+                  {authenticated && joined && (
+                    <>
+                      <Form.Select
+                        id="vote-select"
+                        options={options}
+                        onChange={(e, value) => {
+                          handlePointsChange(value.value);
+                        }}
+                        data-cy="points"
+                      />
+                      <Button
+                        basic
+                        data-cy="vote"
+                        id="vote-button"
+                        color="red"
+                        onClick={() => voteHandler()}
+                      >
+                        Vote
+                      </Button>
+                    </>
+                  )}
                   <>
                     {!authenticated && (
-                      <Card.Content>
+                      <Container>
                         <Button
                           basic
                           as={Link}
                           to="/login"
-                          id="button"
+                          id="join-button"
                           color="red"
                         >
                           Join this poll
                         </Button>
-                      </Card.Content>
+                      </Container>
                     )}
                   </>
                   {authenticated && !joined && (
-                    <Card.Content>
+                    <Container>
                       <Button
                         basic
                         color="red"
                         onClick={() => joinHandler()}
                         data-cy="join-poll"
-                        id="button"
+                        id="join-button"
                       >
                         Join this poll
                       </Button>
-                    </Card.Content>
+                    </Container>
                   )}
+                  <Divider />
                   {joined && (
-                    <Card.Content>
+                    <div>
                       <>
                         <Button
                           basic
                           onClick={() => ViewTeamHandler()}
                           data-cy="view-participants"
                           id="button"
-                          color="purple"
+                          color="black"
                         >
                           View participants
                         </Button>
-
-                        <Card.Content>
-                          <List>
-                            <List.Item>
-                              <List.Content data-cy="team">
-                                {listTeam}
-                              </List.Content>
-                            </List.Item>
-                          </List>
-                        </Card.Content>
+                        <List>
+                          <List.Item>
+                            <List.Content data-cy="team">
+                              {listTeam}
+                            </List.Content>
+                          </List.Item>
+                        </List>
                       </>
-                    </Card.Content>
+                    </div>
                   )}
-                </Card>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      )}
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     </>
   );
 };
