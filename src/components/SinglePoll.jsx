@@ -145,6 +145,12 @@ const SinglePoll = () => {
           </Container>
         </>
       )}
+       {joined && (
+                    <Container id="header" data-cy="join-poll-message" color="black">
+                      <h1>You are joined to this poll</h1>
+                      <Divider />
+                    </Container>
+                  )}
       <Image src={cards3} size="large" floated="right" id="cards3" />
       {voteMessage && (
         <Container>
@@ -183,11 +189,7 @@ const SinglePoll = () => {
             <Grid.Column width={6}>
               <Card fluid id="singlePoll-card" color="red">
                 <Card.Content>
-                  {joined && (
-                    <Message data-cy="join-poll-message" color="black">
-                      You are joined to this poll
-                    </Message>
-                  )}
+                 
                   {status !== [] && (
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
