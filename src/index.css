@@ -45,20 +45,31 @@
 #button {
   font-family: "Rock Salt", cursive;
 }
+#vote-select {
+  font-family: "Rock Salt", cursive;
+  margin-bottom: 1em;
+}
 #description,
-#tasks
-{
+#tasks {
   font-weight: bold;
   margin-top: 1em;
 }
 #points {
   margin-top: 1em;
- font-family: "Rock Salt", cursive; 
+  font-family: "Rock Salt", cursive;
+}
+#poll-status {
+  margin-top: 1em;
+  font-family: "Rock Salt", cursive;
+  font-size: 2em;
 }
 #link {
   color: black;
-  font-family: "Rock Salt", cursive; 
+  font-family: "Rock Salt", cursive;
 }
 #singlePoll-card {
+  margin-top: 10em;
+}
+#column-2 {
   margin-top: 10em;
 }
