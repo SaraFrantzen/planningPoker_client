@@ -23,7 +23,7 @@ const SinglePoll = () => {
   const currentUser = useSelector((state) => state.currentUser);
 
   const [joined, setJoined] = useState(false);
-  const [viewTeam, setViewTeam] = useState(false);
+
   const [listTeam, setListTeam] = useState();
   const [selectedPoints, setSelectedPoints] = useState();
   const [voteMessage, setVoteMessage] = useState("");
@@ -97,7 +97,6 @@ const SinglePoll = () => {
   const ViewTeamHandler = async () => {
     let list = poll.team.map((team) => <li>{team}</li>);
     setListTeam(list);
-    setViewTeam(true);
   };
 
   const handlePointsChange = (value) => {
