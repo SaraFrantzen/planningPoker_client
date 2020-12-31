@@ -32,6 +32,7 @@ const SinglePoll = () => {
   const [voteMessage, setVoteMessage] = useState("");
   const [status, setStatus] = useState([]);
   const [votes, setVotes] = useState({});
+  const [voteToggle, setVoteToggle] = useState(true);
 
   const [status0, setStatus0] = useState();
   const [status1, setStatus1] = useState();
@@ -51,6 +52,43 @@ const SinglePoll = () => {
     getSinglePoll();
   }, [id]);
 
+
+
+  /* const statusCounter = () => {
+    let statusCounter = status;
+    let zero = 0;
+    let one = 0;
+    let two = 0;
+    let three = 0;
+    for (let i = 0; i < statusCounter.length; i++) {
+      if (statusCounter[i] === 0) {
+        zero++;
+        setStatus0(zero);
+      } else if (statusCounter[i] === 1) {
+        one++;
+        setStatus1(one);
+      } else if (statusCounter[i] === 2) {
+        two++;
+        setStatus2(two);
+      } else if (statusCounter[i] === 3) {
+        three++;
+        setStatus3(three);
+      }
+    }
+  }; */
+
+  useEffect(() => {
+    const teamChecker = async () => {
+      try {
+        if (poll.team.includes(currentUser.email)) {
+          setJoined(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    teamChecker();
+  }, [currentUser, poll]);
   useEffect(() => {
     let statusCounter = status;
     let zero = 0;
@@ -73,19 +111,6 @@ const SinglePoll = () => {
       }
     }
   }, [status]);
-
-  useEffect(() => {
-    const teamChecker = async () => {
-      try {
-        if (poll.team.includes(currentUser.email)) {
-          setJoined(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    teamChecker();
-  }, [currentUser, poll]);
 
   const joinHandler = async () => {
     let userId = currentUser.email;
@@ -111,14 +136,35 @@ const SinglePoll = () => {
     const response = await Polls.vote(id, points, votes);
     if (response.message === "successfully voted") {
       setVoteMessage(
-        `You ${response.message} ${response.votes.points} in this poll`
+        `You ${response.message} ${
+          response.votes[currentUser.email]
+        } in this poll`
       );
       setStatus(response.points);
       setVotes(response.votes);
+      setVoteToggle(false);
+    } else if (response.message === "successfully un-voted") {
+      setVoteMessage("Your previous vote is now removed");
+      setStatus(response.points);
+      setVotes(response.votes);
+      setVoteToggle(true);
     } else {
       setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
     }
   };
+
+  /*   const reVoteHandler = async () => {
+    let points = selectedPoints;
+    const response = await Polls.vote(id, points, votes);
+    if (response.message === "successfully un-voted") {
+      setVoteMessage('Your previous vote is now removed');
+      setStatus(response.points);
+      setVotes(response.votes);
+      setVoteToggle(true);
+    } else {
+      setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
+    }
+  } */
 
   const options = [
     { key: "0", text: "0", value: 0 },
@@ -145,16 +191,16 @@ const SinglePoll = () => {
           </Container>
         </>
       )}
-       {joined && (
-                    <Container id="header" data-cy="join-poll-message" color="black">
-                      <h1>You are joined to this poll</h1>
-                      <Divider />
-                    </Container>
-                  )}
+      {joined && (
+        <Container id="header" data-cy="join-poll-message" color="black">
+          <h1>You are joined to this poll</h1>
+          <Divider />
+        </Container>
+      )}
       <Image src={cards3} size="large" floated="right" id="cards3" />
       {voteMessage && (
         <Container>
-          <Message data-cy="vote-message" id="message" color="green">
+          <Message data-cy="vote-message" id="message" color="black">
             {voteMessage}
           </Message>
         </Container>
@@ -189,7 +235,6 @@ const SinglePoll = () => {
             <Grid.Column width={6}>
               <Card fluid id="singlePoll-card" color="red">
                 <Card.Content>
-                 
                   {status !== [] && (
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
@@ -228,7 +273,7 @@ const SinglePoll = () => {
 
                   <Divider />
 
-                  {authenticated && joined && (
+                  {authenticated && joined && voteToggle && (
                     <>
                       <Form.Select
                         id="vote-select"
@@ -248,6 +293,17 @@ const SinglePoll = () => {
                         Vote
                       </Button>
                     </>
+                  )}
+                  {authenticated && joined && !voteToggle && (
+                    <Button
+                      basic
+                      data-cy="vote"
+                      id="button"
+                      color="red"
+                      onClick={() => voteHandler()}
+                    >
+                      Re-vote
+                    </Button>
                   )}
                   <>
                     {!authenticated && (
