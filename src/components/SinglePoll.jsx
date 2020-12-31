@@ -40,17 +40,24 @@ const SinglePoll = () => {
   const [status3, setStatus3] = useState();
 
   useEffect(() => {
+    
     const getSinglePoll = async () => {
+      
       const response = await Polls.show(id);
+      
       if (response.id) {
         setPoll(response);
         setStatus(response.points);
+        if (response.votes != null) {
+          if (currentUser.email in response.votes)
+          setVoteToggle(false)
+        }
       } else {
         setMessage(response);
       }
     };
     getSinglePoll();
-  }, [id]);
+  }, [id, currentUser.email]);
 
 
 
