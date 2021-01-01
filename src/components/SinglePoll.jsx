@@ -40,17 +40,15 @@ const SinglePoll = () => {
   const [status3, setStatus3] = useState();
 
   useEffect(() => {
-    
     const getSinglePoll = async () => {
-      
       const response = await Polls.show(id);
-      
       if (response.id) {
         setPoll(response);
         setStatus(response.points);
         if (response.votes != null) {
-          if (currentUser.email in response.votes)
-          setVoteToggle(false)
+          if (currentUser.email in response.votes) {
+            setVoteToggle(false);
+          }
         }
       } else {
         setMessage(response);
@@ -58,8 +56,6 @@ const SinglePoll = () => {
     };
     getSinglePoll();
   }, [id, currentUser.email]);
-
-
 
   /* const statusCounter = () => {
     let statusCounter = status;
@@ -96,6 +92,7 @@ const SinglePoll = () => {
     };
     teamChecker();
   }, [currentUser, poll]);
+
   useEffect(() => {
     let statusCounter = status;
     let zero = 0;
@@ -153,6 +150,18 @@ const SinglePoll = () => {
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
       setStatus(response.points);
+      if (!response.points.includes(0)) {
+        setStatus0(0);
+      }
+      if (!response.points.includes(1)) {
+        setStatus1(0);
+      }
+      if (!response.points.includes(2)) {
+        setStatus2(0);
+      }
+      if (!response.points.includes(3)) {
+        setStatus3(0);
+      }
       setVotes(response.votes);
       setVoteToggle(true);
     } else {
@@ -160,18 +169,7 @@ const SinglePoll = () => {
     }
   };
 
-  /*   const reVoteHandler = async () => {
-    let points = selectedPoints;
-    const response = await Polls.vote(id, points, votes);
-    if (response.message === "successfully un-voted") {
-      setVoteMessage('Your previous vote is now removed');
-      setStatus(response.points);
-      setVotes(response.votes);
-      setVoteToggle(true);
-    } else {
-      setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
-    }
-  } */
+
 
   const options = [
     { key: "0", text: "0", value: 0 },
@@ -254,27 +252,36 @@ const SinglePoll = () => {
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>0</Statistic.Value>
-                      <Statistic.Label data-cy="points-0">
+                     {status0 !== 0 && (
+                       <Statistic.Label data-cy="points-0">
                         {status0}
                       </Statistic.Label>
+                     )} 
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>1</Statistic.Value>
-                      <Statistic.Label data-cy="points-1">
+                     {status1 !== 0 && (
+<Statistic.Label data-cy="points-1">
                         {status1}
                       </Statistic.Label>
+                     )} 
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>2</Statistic.Value>
-                      <Statistic.Label data-cy="points-2">
+                     {status2 !== 0 && (
+                       <Statistic.Label data-cy="points-2">
                         {status2}
                       </Statistic.Label>
+                     )} 
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>3</Statistic.Value>
-                      <Statistic.Label data-cy="points-3">
+                      {status3 !== 0 && (
+                        <Statistic.Label data-cy="points-3">
                         {status3}
                       </Statistic.Label>
+                      )}
+                      
                     </Statistic>
                   </Statistic.Group>
 
