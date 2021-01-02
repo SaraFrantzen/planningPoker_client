@@ -194,7 +194,7 @@ const SinglePoll = () => {
         </Container>
       )}
       {joined && userVoted && (
-        <Container id="header" data-cy="join-poll-message" color="black">
+        <Container id="header" data-cy="user-vote-message" color="black">
           <h1>You voted: {userVoted} in this poll</h1>
           <Divider />
         </Container>
@@ -285,13 +285,14 @@ const SinglePoll = () => {
 
                   {authenticated && joined && voteToggle && (
                     <>
+                  
                       <Form.Select
                         id="vote-select"
                         options={options}
                         onChange={(e, value) => {
                           handlePointsChange(value.value);
                         }}
-                        data-cy="points"
+                        data-cy="vote-select"
                       />
                       <Button
                         basic
@@ -302,12 +303,13 @@ const SinglePoll = () => {
                       >
                         Vote
                       </Button>
+                      
                     </>
                   )}
                   {authenticated && joined && !voteToggle && (
                     <Button
                       basic
-                      data-cy="vote"
+                      data-cy="re-vote"
                       id="button"
                       color="red"
                       onClick={() => voteHandler()}

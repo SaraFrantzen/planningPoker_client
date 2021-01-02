@@ -1,6 +1,7 @@
 {
     "message": "successfully voted",
-    "points": [2, 1, 3, 3 ], 
-    "votes": {"email": "sara@epidemicsound.com", "points": 0, "sara@epidemicsound.com": 0}
+    "points": [2], 
+    "votes": {"user@epidemic.com": 2}
+    
   }
   

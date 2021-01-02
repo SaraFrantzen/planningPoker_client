@@ -32,15 +32,22 @@ describe("User can vote", () => {
     });
 
     it("user can vote", () => {
-      cy.get('[data-cy="points"]').contains(0).click({ force: true });
+      cy.get('[data-cy="vote-select"]').contains(2).click({ force: true });
       cy.get('[data-cy="vote"]').click();
       cy.get('[data-cy="vote-message"]').should(
         "contain",
-        "You successfully voted 0 in this poll"
+        "You successfully voted 2 in this poll"
       );
-      cy.get("[data-cy='points-0']").should("contain", "1");
-    });
+      cy.get("[data-cy='points-2']").should("contain", 1);
+      cy.get('[data-cy="vote"]').should("not.exist")
+    
+    cy.get('[data-cy="user-vote-message"]').should(
+      "contain",
+      "You voted: 2 in this poll"
+    );
   });
+});
+
 
   context("unsuccessfully", () => {
     beforeEach(() => {

@@ -74,6 +74,7 @@ const Polls = {
           headers: headers,
         }
       );
+      
       return response.data;
     } catch (error) {
       return error.response.statusText;
