@@ -33,11 +33,11 @@ const SinglePoll = () => {
   const [status, setStatus] = useState([]);
   const [votes, setVotes] = useState({});
   const [voteToggle, setVoteToggle] = useState(true);
-
-  const [status0, setStatus0] = useState();
-  const [status1, setStatus1] = useState();
-  const [status2, setStatus2] = useState();
-  const [status3, setStatus3] = useState();
+  const [userVoted, setUserVoted] = useState()
+  const [status0, setStatus0] = useState(0);
+  const [status1, setStatus1] = useState(0);
+  const [status2, setStatus2] = useState(0);
+  const [status3, setStatus3] = useState(0);
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -47,6 +47,7 @@ const SinglePoll = () => {
         setStatus(response.points);
         if (response.votes != null) {
           if (currentUser.email in response.votes) {
+            setUserVoted(response.votes[currentUser.email])
             setVoteToggle(false);
           }
         }
@@ -56,29 +57,6 @@ const SinglePoll = () => {
     };
     getSinglePoll();
   }, [id, currentUser.email]);
-
-  /* const statusCounter = () => {
-    let statusCounter = status;
-    let zero = 0;
-    let one = 0;
-    let two = 0;
-    let three = 0;
-    for (let i = 0; i < statusCounter.length; i++) {
-      if (statusCounter[i] === 0) {
-        zero++;
-        setStatus0(zero);
-      } else if (statusCounter[i] === 1) {
-        one++;
-        setStatus1(one);
-      } else if (statusCounter[i] === 2) {
-        two++;
-        setStatus2(two);
-      } else if (statusCounter[i] === 3) {
-        three++;
-        setStatus3(three);
-      }
-    }
-  }; */
 
   useEffect(() => {
     const teamChecker = async () => {
@@ -117,6 +95,7 @@ const SinglePoll = () => {
   }, [status]);
 
   const joinHandler = async () => {
+    
     let userId = currentUser.email;
     let response = await Polls.join(id, userId);
     if (response.message) {
@@ -147,20 +126,34 @@ const SinglePoll = () => {
       setStatus(response.points);
       setVotes(response.votes);
       setVoteToggle(false);
+      setUserVoted(response.points)
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
       setStatus(response.points);
-      if (!response.points.includes(0)) {
-        setStatus0(0);
-      }
-      if (!response.points.includes(1)) {
-        setStatus1(0);
-      }
-      if (!response.points.includes(2)) {
-        setStatus2(0);
-      }
-      if (!response.points.includes(3)) {
-        setStatus3(0);
+      setUserVoted()
+      setStatus0(status0 - 1);
+      setStatus1(status1 - 1);
+      setStatus2(status2 - 1);
+      setStatus3(status3 - 1);
+      let statusCounter = response.points;
+      let zero = 0;
+      let one = 0;
+      let two = 0;
+      let three = 0;
+      for (let i = 0; i < statusCounter.length; i++) {
+        if (statusCounter[i] === 0) {
+          zero++;
+          setStatus0(zero);
+        } else if (statusCounter[i] === 1) {
+          one++;
+          setStatus1(one);
+        } else if (statusCounter[i] === 2) {
+          two++;
+          setStatus2(two);
+        } else if (statusCounter[i] === 3) {
+          three++;
+          setStatus3(three);
+        }
       }
       setVotes(response.votes);
       setVoteToggle(true);
@@ -168,8 +161,6 @@ const SinglePoll = () => {
       setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
     }
   };
-
-
 
   const options = [
     { key: "0", text: "0", value: 0 },
@@ -180,6 +171,7 @@ const SinglePoll = () => {
 
   return (
     <>
+ 
       {authenticated && !joined && (
         <>
           <Container id="header">
@@ -196,9 +188,15 @@ const SinglePoll = () => {
           </Container>
         </>
       )}
-      {joined && (
+      {joined && !userVoted &&(
         <Container id="header" data-cy="join-poll-message" color="black">
           <h1>You are joined to this poll</h1>
+          <Divider />
+        </Container>
+      )}
+        {joined && userVoted &&(
+        <Container id="header" data-cy="join-poll-message" color="black">
+          <h1>You voted: {userVoted} in this poll</h1>
           <Divider />
         </Container>
       )}
@@ -252,36 +250,35 @@ const SinglePoll = () => {
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>0</Statistic.Value>
-                     {status0 !== 0 && (
-                       <Statistic.Label data-cy="points-0">
-                        {status0}
-                      </Statistic.Label>
-                     )} 
+                      {status0 > 0 && (
+                        <Statistic.Label data-cy="points-0">
+                          {status0}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>1</Statistic.Value>
-                     {status1 !== 0 && (
-<Statistic.Label data-cy="points-1">
-                        {status1}
-                      </Statistic.Label>
-                     )} 
+                      {status1 > 0 && (
+                        <Statistic.Label data-cy="points-1">
+                          {status1}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>2</Statistic.Value>
-                     {status2 !== 0 && (
-                       <Statistic.Label data-cy="points-2">
-                        {status2}
-                      </Statistic.Label>
-                     )} 
+                      {status2 > 0 && (
+                        <Statistic.Label data-cy="points-2">
+                          {status2}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>3</Statistic.Value>
-                      {status3 !== 0 && (
+                      {status3 > 0 && (
                         <Statistic.Label data-cy="points-3">
-                        {status3}
-                      </Statistic.Label>
+                          {status3}
+                        </Statistic.Label>
                       )}
-                      
                     </Statistic>
                   </Statistic.Group>
 
