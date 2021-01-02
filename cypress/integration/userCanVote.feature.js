@@ -39,34 +39,30 @@ describe("User can vote", () => {
         "You successfully voted 2 in this poll"
       );
       cy.get("[data-cy='points-2']").should("contain", 1);
-      cy.get('[data-cy="vote"]').should("not.exist")
-    
-    cy.get('[data-cy="user-vote-message"]').should(
-      "contain",
-      "You voted: 2 in this poll"
-    );
+      cy.get('[data-cy="vote"]').should("not.exist");
+
+      cy.get('[data-cy="user-vote-message"]').should(
+        "contain",
+        "You voted: 2 in this poll"
+      );
+    });
   });
-});
 
-
-  context("unsuccessfully", () => {
+  context("unsuccessfully - not selecting points", () => {
     beforeEach(() => {
       cy.server();
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: {
-          error: "Ooops. Unauthorized, You need to sign in to be able to vote",
-        },
-        status: 401,
+        response: "You need to pick a value to vote",
       });
     });
 
-    it("visitor receives error message if user-session broke", () => {
+    it("visitor receives error message if points are blank", () => {
       cy.get('[data-cy="vote"]').click();
       cy.get("[data-cy='error-message']").should(
         "contain",
-        "Ooops. Unauthorized, You need to sign in to be able to vote"
+        "You need to pick a value to vote"
       );
     });
   });

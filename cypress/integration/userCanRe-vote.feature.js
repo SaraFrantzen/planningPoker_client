@@ -1,4 +1,4 @@
-describe("User can vote", () => {
+describe("User can re-vote", () => {
   beforeEach(() => {
     cy.server();
     cy.route({
@@ -55,16 +55,13 @@ describe("User can vote", () => {
     });
   });
 
-  context("unsuccessfully", () => {
+  context("unsuccessfully - usersession breaks", () => {
     beforeEach(() => {
       cy.server();
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: {
-          error: "Ooops. Unauthorized, You need to sign in to be able to vote",
-        },
-        status: 401,
+        response: "Unauthorized, You need to sign in before you can proceed",
       });
     });
 
@@ -72,7 +69,7 @@ describe("User can vote", () => {
       cy.get('[data-cy="re-vote"]').click();
       cy.get("[data-cy='error-message']").should(
         "contain",
-        "Ooops. Unauthorized, You need to sign in to be able to vote"
+        "Unauthorized, You need to sign in before you can proceed"
       );
     });
   });

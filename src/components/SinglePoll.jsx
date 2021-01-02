@@ -61,7 +61,7 @@ const SinglePoll = () => {
   useEffect(() => {
     const teamChecker = async () => {
       try {
-        if (poll.team.includes(currentUser.email)) {
+        if (poll.team.includes(currentUser.name)) {
           setJoined(true);
         }
       } catch (error) {
@@ -158,7 +158,8 @@ const SinglePoll = () => {
       setVotes(response.votes);
       setVoteToggle(true);
     } else {
-      setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
+      debugger
+      setMessage(response);
     }
   };
 

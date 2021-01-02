@@ -77,7 +77,7 @@ const Polls = {
       
       return response.data;
     } catch (error) {
-      return error.response.statusText;
+      return error.response.data.error_message;
     }
   },
 };
