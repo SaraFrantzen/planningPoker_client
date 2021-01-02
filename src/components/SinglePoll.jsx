@@ -26,14 +26,14 @@ const SinglePoll = () => {
   const currentUser = useSelector((state) => state.currentUser);
 
   const [joined, setJoined] = useState(false);
-
+  const [team, setTeam] = useState([]);
   const [listTeam, setListTeam] = useState();
   const [selectedPoints, setSelectedPoints] = useState();
   const [voteMessage, setVoteMessage] = useState("");
   const [status, setStatus] = useState([]);
   const [votes, setVotes] = useState({});
   const [voteToggle, setVoteToggle] = useState(true);
-  const [userVoted, setUserVoted] = useState()
+  const [userVoted, setUserVoted] = useState();
   const [status0, setStatus0] = useState(0);
   const [status1, setStatus1] = useState(0);
   const [status2, setStatus2] = useState(0);
@@ -47,7 +47,7 @@ const SinglePoll = () => {
         setStatus(response.points);
         if (response.votes != null) {
           if (currentUser.email in response.votes) {
-            setUserVoted(response.votes[currentUser.email])
+            setUserVoted(response.votes[currentUser.email]);
             setVoteToggle(false);
           }
         }
@@ -95,10 +95,10 @@ const SinglePoll = () => {
   }, [status]);
 
   const joinHandler = async () => {
-    
-    let userId = currentUser.email;
+    let userId = currentUser.name;
     let response = await Polls.join(id, userId);
     if (response.message) {
+      setTeam(response.team);
       setJoined(true);
     } else {
       setMessage(response);
@@ -106,7 +106,7 @@ const SinglePoll = () => {
   };
 
   const ViewTeamHandler = async () => {
-    let list = poll.team.map((team) => <li>{team}</li>);
+    let list = team.map((team) => <li>{team}</li>);
     setListTeam(list);
   };
 
@@ -126,11 +126,11 @@ const SinglePoll = () => {
       setStatus(response.points);
       setVotes(response.votes);
       setVoteToggle(false);
-      setUserVoted(response.points)
+      setUserVoted(response.points);
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
       setStatus(response.points);
-      setUserVoted()
+      setUserVoted();
       setStatus0(status0 - 1);
       setStatus1(status1 - 1);
       setStatus2(status2 - 1);
@@ -171,7 +171,6 @@ const SinglePoll = () => {
 
   return (
     <>
- 
       {authenticated && !joined && (
         <>
           <Container id="header">
@@ -188,13 +187,13 @@ const SinglePoll = () => {
           </Container>
         </>
       )}
-      {joined && !userVoted &&(
+      {joined && !userVoted && (
         <Container id="header" data-cy="join-poll-message" color="black">
           <h1>You are joined to this poll</h1>
           <Divider />
         </Container>
       )}
-        {joined && userVoted &&(
+      {joined && userVoted && (
         <Container id="header" data-cy="join-poll-message" color="black">
           <h1>You voted: {userVoted} in this poll</h1>
           <Divider />
