@@ -26,17 +26,18 @@ const SinglePoll = () => {
   const currentUser = useSelector((state) => state.currentUser);
 
   const [joined, setJoined] = useState(false);
-
+  const [team, setTeam] = useState([]);
   const [listTeam, setListTeam] = useState();
   const [selectedPoints, setSelectedPoints] = useState();
   const [voteMessage, setVoteMessage] = useState("");
   const [status, setStatus] = useState([]);
   const [votes, setVotes] = useState({});
-
-  const [status0, setStatus0] = useState();
-  const [status1, setStatus1] = useState();
-  const [status2, setStatus2] = useState();
-  const [status3, setStatus3] = useState();
+  const [voteToggle, setVoteToggle] = useState(true);
+  const [userVoted, setUserVoted] = useState();
+  const [status0, setStatus0] = useState(0);
+  const [status1, setStatus1] = useState(0);
+  const [status2, setStatus2] = useState(0);
+  const [status3, setStatus3] = useState(0);
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -44,12 +45,31 @@ const SinglePoll = () => {
       if (response.id) {
         setPoll(response);
         setStatus(response.points);
+        if (response.votes != null) {
+          if (currentUser.email in response.votes) {
+            setUserVoted(response.votes[currentUser.email]);
+            setVoteToggle(false);
+          }
+        }
       } else {
         setMessage(response);
       }
     };
     getSinglePoll();
-  }, [id]);
+  }, [id, currentUser.email]);
+
+  useEffect(() => {
+    const teamChecker = async () => {
+      try {
+        if (poll.team.includes(currentUser.name)) {
+          setJoined(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    teamChecker();
+  }, [currentUser, poll]);
 
   useEffect(() => {
     let statusCounter = status;
@@ -74,23 +94,11 @@ const SinglePoll = () => {
     }
   }, [status]);
 
-  useEffect(() => {
-    const teamChecker = async () => {
-      try {
-        if (poll.team.includes(currentUser.email)) {
-          setJoined(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    teamChecker();
-  }, [currentUser, poll]);
-
   const joinHandler = async () => {
-    let userId = currentUser.email;
+    let userId = currentUser.name;
     let response = await Polls.join(id, userId);
     if (response.message) {
+      setTeam(response.team);
       setJoined(true);
     } else {
       setMessage(response);
@@ -98,7 +106,7 @@ const SinglePoll = () => {
   };
 
   const ViewTeamHandler = async () => {
-    let list = poll.team.map((team) => <li>{team}</li>);
+    let list = team.map((team) => <li>{team}</li>);
     setListTeam(list);
   };
 
@@ -111,12 +119,47 @@ const SinglePoll = () => {
     const response = await Polls.vote(id, points, votes);
     if (response.message === "successfully voted") {
       setVoteMessage(
-        `You ${response.message} ${response.votes.points} in this poll`
+        `You ${response.message} ${
+          response.votes[currentUser.email]
+        } in this poll`
       );
       setStatus(response.points);
       setVotes(response.votes);
+      setVoteToggle(false);
+      setUserVoted(response.points);
+    } else if (response.message === "successfully un-voted") {
+      setVoteMessage("Your previous vote is now removed");
+      setStatus(response.points);
+      setUserVoted();
+      setStatus0(status0 - 1);
+      setStatus1(status1 - 1);
+      setStatus2(status2 - 1);
+      setStatus3(status3 - 1);
+      let statusCounter = response.points;
+      let zero = 0;
+      let one = 0;
+      let two = 0;
+      let three = 0;
+      for (let i = 0; i < statusCounter.length; i++) {
+        if (statusCounter[i] === 0) {
+          zero++;
+          setStatus0(zero);
+        } else if (statusCounter[i] === 1) {
+          one++;
+          setStatus1(one);
+        } else if (statusCounter[i] === 2) {
+          two++;
+          setStatus2(two);
+        } else if (statusCounter[i] === 3) {
+          three++;
+          setStatus3(three);
+        }
+      }
+      setVotes(response.votes);
+      setVoteToggle(true);
     } else {
-      setMessage(`Ooops. ${response}, You need to sign in to be able to vote`);
+      debugger
+      setMessage(response);
     }
   };
 
@@ -145,16 +188,22 @@ const SinglePoll = () => {
           </Container>
         </>
       )}
-       {joined && (
-                    <Container id="header" data-cy="join-poll-message" color="black">
-                      <h1>You are joined to this poll</h1>
-                      <Divider />
-                    </Container>
-                  )}
+      {joined && !userVoted && (
+        <Container id="header" data-cy="join-poll-message" color="black">
+          <h1>You are joined to this poll</h1>
+          <Divider />
+        </Container>
+      )}
+      {joined && userVoted && (
+        <Container id="header" data-cy="user-vote-message" color="black">
+          <h1>You voted: {userVoted} in this poll</h1>
+          <Divider />
+        </Container>
+      )}
       <Image src={cards3} size="large" floated="right" id="cards3" />
       {voteMessage && (
         <Container>
-          <Message data-cy="vote-message" id="message" color="green">
+          <Message data-cy="vote-message" id="message" color="black">
             {voteMessage}
           </Message>
         </Container>
@@ -189,7 +238,6 @@ const SinglePoll = () => {
             <Grid.Column width={6}>
               <Card fluid id="singlePoll-card" color="red">
                 <Card.Content>
-                 
                   {status !== [] && (
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
@@ -202,41 +250,50 @@ const SinglePoll = () => {
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>0</Statistic.Value>
-                      <Statistic.Label data-cy="points-0">
-                        {status0}
-                      </Statistic.Label>
+                      {status0 > 0 && (
+                        <Statistic.Label data-cy="points-0">
+                          {status0}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>1</Statistic.Value>
-                      <Statistic.Label data-cy="points-1">
-                        {status1}
-                      </Statistic.Label>
+                      {status1 > 0 && (
+                        <Statistic.Label data-cy="points-1">
+                          {status1}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>2</Statistic.Value>
-                      <Statistic.Label data-cy="points-2">
-                        {status2}
-                      </Statistic.Label>
+                      {status2 > 0 && (
+                        <Statistic.Label data-cy="points-2">
+                          {status2}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                     <Statistic color="red">
                       <Statistic.Value>3</Statistic.Value>
-                      <Statistic.Label data-cy="points-3">
-                        {status3}
-                      </Statistic.Label>
+                      {status3 > 0 && (
+                        <Statistic.Label data-cy="points-3">
+                          {status3}
+                        </Statistic.Label>
+                      )}
                     </Statistic>
                   </Statistic.Group>
 
                   <Divider />
 
-                  {authenticated && joined && (
+                  {authenticated && joined && voteToggle && (
                     <>
+                  
                       <Form.Select
                         id="vote-select"
                         options={options}
                         onChange={(e, value) => {
                           handlePointsChange(value.value);
                         }}
-                        data-cy="points"
+                        data-cy="vote-select"
                       />
                       <Button
                         basic
@@ -247,7 +304,19 @@ const SinglePoll = () => {
                       >
                         Vote
                       </Button>
+                      
                     </>
+                  )}
+                  {authenticated && joined && !voteToggle && (
+                    <Button
+                      basic
+                      data-cy="re-vote"
+                      id="button"
+                      color="red"
+                      onClick={() => voteHandler()}
+                    >
+                      Re-vote
+                    </Button>
                   )}
                   <>
                     {!authenticated && (

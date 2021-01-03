@@ -1,4 +1,4 @@
-describe("User can vote", () => {
+describe("User can re-vote", () => {
   beforeEach(() => {
     cy.server();
     cy.route({
@@ -16,53 +16,60 @@ describe("User can vote", () => {
       url: "http://localhost:3000/api/polls/1",
       response: { message: "successfully joined this poll" },
     });
+    cy.route({
+      method: "PUT",
+      url: "http://localhost:3000/api/polls/1",
+      response: "fixture:polls_update.json",
+    });
     cy.visit("/");
     cy.login();
     cy.get("[data-cy='poll-1']").click();
     cy.get('[data-cy="join-poll"]').click();
+
+    cy.get('[data-cy="vote-select"]').contains(2).click({ force: true });
+    cy.get('[data-cy="vote"]').click();
   });
 
-  context("successfully voted", () => {
+  context("successfully un-voted", () => {
     beforeEach(() => {
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: "fixture:polls_update.json",
+        response: "fixture:polls_un-vote.json",
       });
     });
 
-    it("user can vote", () => {
-      cy.get('[data-cy="vote-select"]').contains(2).click({ force: true });
-      cy.get('[data-cy="vote"]').click();
+    it("user can un-vote to be able to re-vote", () => {
+      cy.get("[data-cy='re-vote']").click();
       cy.get('[data-cy="vote-message"]').should(
         "contain",
-        "You successfully voted 2 in this poll"
+        "Your previous vote is now removed"
       );
       cy.get("[data-cy='points-2']").should("contain", 1);
-      cy.get('[data-cy="vote"]').should("not.exist");
-
-      cy.get('[data-cy="user-vote-message"]').should(
+      cy.get('[data-cy="vote"]').should("be.visible");
+      cy.get('[data-cy="user-vote-message"]').should("not.exist");
+      cy.get('[data-cy="join-poll-message"]').should(
         "contain",
-        "You voted: 2 in this poll"
+        "You are joined to this poll"
       );
     });
   });
 
-  context("unsuccessfully - not selecting points", () => {
+  context("unsuccessfully - usersession breaks", () => {
     beforeEach(() => {
       cy.server();
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: "You need to pick a value to vote",
+        response: "Unauthorized, You need to sign in before you can proceed",
       });
     });
 
-    it("visitor receives error message if points are blank", () => {
-      cy.get('[data-cy="vote"]').click();
+    it("visitor receives error message if user-session broke", () => {
+      cy.get('[data-cy="re-vote"]').click();
       cy.get("[data-cy='error-message']").should(
         "contain",
-        "You need to pick a value to vote"
+        "Unauthorized, You need to sign in before you can proceed"
       );
     });
   });
