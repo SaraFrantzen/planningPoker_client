@@ -17,7 +17,7 @@ const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
   const [pollId, setPollId] = useState();
   const [image, setImage] = useState();
-
+  const [errormessage, setErrormessage] = useState("");
   const selectImage = (e) => {
     setImage(e.target.files[0]);
   };
@@ -34,8 +34,13 @@ const CreatePollsForm = () => {
       tasks,
       encodedImage
     );
-    setMessage(response.message);
-    setPollId(response.id);
+    if (response.message) {
+      setMessage(response.message);
+      setPollId(response.id);
+      setErrormessage("");
+    } else {
+      setErrormessage(response);
+    }
   };
 
   return (
@@ -62,6 +67,11 @@ const CreatePollsForm = () => {
                     https://epidemicplanningpoker.netlify.app/polls/{pollId}
                   </a>
                   <br />
+                </Message>
+              )}
+              {errormessage && (
+                <Message data-cy="save-poll-message" color="black" id="message">
+                  {errormessage}
                 </Message>
               )}
             </Grid.Column>
