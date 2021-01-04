@@ -36,7 +36,7 @@
   margin-top: 5em;
 }
 #message {
-  margin-top: 5em;
+  margin-top: 2em;
   width: 35em;
 }
 
@@ -102,6 +102,7 @@
 }
 #cards3 {
   margin-right: 4em;
+  margin-top: 5em;
 }
 #statistics {
   margin-left: 3em;

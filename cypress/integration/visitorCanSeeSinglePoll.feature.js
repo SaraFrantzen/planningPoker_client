@@ -25,6 +25,7 @@ describe("Visitor can see a specific poll", () => {
         "Index action. Routes to that action. Polls model: title, description. Polls index in serializer."
       );
       cy.get("[data-cy='points-2']").should("contain", "1");
+      cy.get("[data-cy='image']").should("be.visible");
     });
   });
 

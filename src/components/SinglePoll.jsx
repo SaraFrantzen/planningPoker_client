@@ -127,8 +127,10 @@ const SinglePoll = () => {
       setVotes(response.votes);
       setVoteToggle(false);
       setUserVoted(response.points);
+      setMessage("");
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
+      setMessage("");
       setStatus(response.points);
       setUserVoted();
       setStatus0(status0 - 1);
@@ -158,7 +160,6 @@ const SinglePoll = () => {
       setVotes(response.votes);
       setVoteToggle(true);
     } else {
-      debugger
       setMessage(response);
     }
   };
@@ -200,7 +201,7 @@ const SinglePoll = () => {
           <Divider />
         </Container>
       )}
-      <Image src={cards3} size="large" floated="right" id="cards3" />
+
       {voteMessage && (
         <Container>
           <Message data-cy="vote-message" id="message" color="black">
@@ -218,7 +219,27 @@ const SinglePoll = () => {
       <Container>
         <Grid>
           <Grid.Row>
-            <Grid.Column width={6} id="column-1">
+            <Grid.Column width={5}>
+              <>
+                {poll.image ? (
+                  <>
+                    <Card id="singlePoll-card" fluid color="red">
+                      <Card.Content id="poll-status">Lo-Fi</Card.Content>
+                      <Image data-cy="image" src={poll.image} bordered />
+                    </Card>
+                  </>
+                ) : (
+                  <Image
+                    src={cards3}
+                    size="medium"
+                    floated="right"
+                    id="cards3"
+                  />
+                )}
+              </>
+            </Grid.Column>
+
+            <Grid.Column width={5}>
               <Card id="singlePoll-card" color="red">
                 <Card.Content id="poll-status">Feature</Card.Content>
                 <Card.Content>
@@ -286,7 +307,6 @@ const SinglePoll = () => {
 
                   {authenticated && joined && voteToggle && (
                     <>
-                  
                       <Form.Select
                         id="vote-select"
                         options={options}
@@ -304,7 +324,6 @@ const SinglePoll = () => {
                       >
                         Vote
                       </Button>
-                      
                     </>
                   )}
                   {authenticated && joined && !voteToggle && (
@@ -348,7 +367,7 @@ const SinglePoll = () => {
                   )}
                   <Divider />
                   {joined && (
-                    <div>
+                    <>
                       <>
                         <Button
                           basic
@@ -367,7 +386,7 @@ const SinglePoll = () => {
                           </List.Item>
                         </List>
                       </>
-                    </div>
+                    </>
                   )}
                 </Card.Content>
               </Card>
