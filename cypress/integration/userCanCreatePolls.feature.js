@@ -27,6 +27,7 @@ describe("User can create poll", () => {
         cy.get('[data-cy="description"]').type("description");
         cy.get('[data-cy="tasks"]').type("tasks");
       });
+      cy.file_upload("img.jpeg", "[data-cy='image-upload']", "image/jpeg");
       cy.get('[data-cy="save-poll"]').contains("Save Poll").click();
       cy.get('[data-cy="save-poll-message"]').should(
         "contain",
