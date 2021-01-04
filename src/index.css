@@ -39,6 +39,12 @@
   margin-top: 5em;
   width: 35em;
 }
+
+#message-link {
+  font-family: "Rock Salt", cursive;
+  font-size: 1em;
+  padding-right: 2.3em;
+}
 #button,
 #form-input {
   font-family: "Rock Salt", cursive;
@@ -81,11 +87,7 @@
   font-family: "Rock Salt", cursive;
   font-size: 2em;
 }
-#link {
-  color: white;
-  font-family: "Rock Salt", cursive;
-  font-size: 1em;
-}
+
 #singlePoll-card {
   margin-top: 5em;
 }
