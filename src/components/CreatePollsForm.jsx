@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import toBase64 from "../modules/toBase64";
+import Polls from "../modules/polls";
+import { Link } from "react-router-dom";
+import cards4 from "../images/cards4.jpg";
 import {
   Form,
   Container,
@@ -6,21 +10,37 @@ import {
   Button,
   Grid,
   Image,
+  Card,
 } from "semantic-ui-react";
-import Polls from "../modules/polls";
-import { Link } from "react-router-dom";
-import cards4 from "../images/cards4.jpg";
 
 const CreatePollsForm = () => {
   const [message, setMessage] = useState("");
   const [pollId, setPollId] = useState();
+  const [image, setImage] = useState();
+  const [errormessage, setErrormessage] = useState("");
+  const selectImage = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let { title, description, tasks } = e.target;
-    const response = await Polls.create(title, description, tasks);
-    setMessage(response.message);
-    setPollId(response.id);
+    let { title, description, tasks, encodedImage } = e.target;
+    if (image) {
+      encodedImage = await toBase64(image);
+    }
+    const response = await Polls.create(
+      title,
+      description,
+      tasks,
+      encodedImage
+    );
+    if (response.message) {
+      setMessage(response.message);
+      setPollId(response.id);
+      setErrormessage("");
+    } else {
+      setErrormessage(response);
+    }
   };
 
   return (
@@ -35,18 +55,28 @@ const CreatePollsForm = () => {
             </Grid.Column>
             <Grid.Column width={8}>
               {message && (
-                <Message data-cy="save-poll-message" color="black" id="message">
-                  {message} !
-                  <br />
-                  Your poll can be viewed at:
-                  <br />
-                  <a
-                    href={`https://epidemicplanningpoker.netlify.app/polls/${pollId}`}
-                    id="link"
+                <>
+                  <Message data-cy="save-poll-message" color="black" id="message">
+                    {message} ! <br />
+                    Your poll can be viewed at:
+                    <br />
+                  </Message>
+                  <Message
+                    data-cy="save-poll-message"
+                    color="black"
+                    as={Link}
+                    to={`/polls/${pollId}`}
+                    id="message-link"
+                    
                   >
                     https://epidemicplanningpoker.netlify.app/polls/{pollId}
-                  </a>
-                  <br />
+                    <br />
+                  </Message>
+                </>
+              )}
+              {errormessage && (
+                <Message data-cy="save-poll-message" color="black" id="message">
+                  {errormessage}
                 </Message>
               )}
             </Grid.Column>
@@ -79,6 +109,14 @@ const CreatePollsForm = () => {
             data-cy="tasks"
             name="tasks"
           />
+          <Form.Input
+            onChange={selectImage}
+            fluid
+            label="Image"
+            data-cy="image-upload"
+            type="file"
+            
+          />
           <Form.Button
             data-cy="save-poll"
             basic
@@ -89,6 +127,11 @@ const CreatePollsForm = () => {
             Save Poll
           </Form.Button>
         </Form>
+        {image && (
+          <Card>
+            <Image src={URL.createObjectURL(image)} alt="preview" />
+          </Card>
+        )}
       </Container>
     </>
   );
