@@ -234,6 +234,7 @@ const SinglePoll = () => {
                     size="medium"
                     floated="right"
                     id="cards3"
+                    data-cy="poker-logo"
                   />
                 )}
               </>
