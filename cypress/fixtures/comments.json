@@ -1,0 +1,24 @@
+{
+  "comments": [
+    {
+      "id": 1,
+      "comment": "First comment",
+      "name": "user1"
+    },
+    {
+      "id": 2,
+      "comment": "Second comment",
+      "name": "user2"
+    },
+    {
+      "id": 3,
+      "comment": "Third comment",
+      "name": "user3"
+    },
+    {
+      "id": 4,
+      "comment": "Fourth comment",
+      "name": "user4"
+    }
+  ]
+}

@@ -399,6 +399,7 @@ const SinglePoll = () => {
       </Container>
       <Container>
         <CommentForm />
+      
       </Container>
     </>
   );
