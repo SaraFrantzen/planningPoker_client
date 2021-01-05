@@ -36,4 +36,22 @@ describe("User can create poll", () => {
       );
     });
   });
+
+  context("unsuccessfully", () => {
+    beforeEach(() => {
+      cy.route({
+        method: "POST",
+        url: "http://localhost:3000/api/comments",
+        response: { message: "Comment can't be blank" },
+      });
+    });
+
+    it("without comments body", () => {
+      cy.get('[data-cy="save-comment"]').contains("Post Comment").click();
+      cy.get('[data-cy="save-comment-message"]').should(
+        "contain",
+        "Comment can't be blank"
+      );
+    });
+  });
 });

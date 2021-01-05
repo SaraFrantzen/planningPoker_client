@@ -4,7 +4,7 @@ import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cards3 from "../images/cards3.jpg";
-import CommentForm from './CommentForm';
+import CommentForm from "./CommentForm";
 import {
   Container,
   Card,
@@ -128,7 +128,7 @@ const SinglePoll = () => {
       setVotes(response.votes);
       setVoteToggle(false);
       setUserVoted(response.votes[currentUser.email]);
-      
+
       setMessage("");
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
