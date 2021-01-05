@@ -126,7 +126,8 @@ const SinglePoll = () => {
       setStatus(response.points);
       setVotes(response.votes);
       setVoteToggle(false);
-      setUserVoted(response.points);
+      setUserVoted(response.votes[currentUser.email]);
+      
       setMessage("");
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
