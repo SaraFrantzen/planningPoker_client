@@ -29,6 +29,7 @@ describe("Visitor can see a specific poll's comments", () => {
     it("visitor can click on an poll and view its full content", () => {
       cy.get("[data-cy='comment-1']").within(() => {
         cy.get("[data-cy='body']").should("contain", "myComment");
+        cy.get("[data-cy='user']").should("contain", "user1");
       });
     });
   });
