@@ -4,6 +4,7 @@ import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cards3 from "../images/cards3.jpg";
+import CommentForm from './CommentForm';
 import {
   Container,
   Card,
@@ -395,6 +396,9 @@ const SinglePoll = () => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+      </Container>
+      <Container>
+        <CommentForm />
       </Container>
     </>
   );

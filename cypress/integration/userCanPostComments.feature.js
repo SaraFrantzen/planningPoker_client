@@ -29,7 +29,7 @@ describe("User can create poll", () => {
       cy.get('[data-cy="form-comment"]').within(() => {
         cy.get('[data-cy="comment"]').type("myComment");
       });
-      cy.get('[data-cy="save-comment"]').contains("Save Comment").click();
+      cy.get('[data-cy="save-comment"]').contains("Post Comment").click();
       cy.get('[data-cy="save-comment-message"]').should(
         "contain",
         "successfully saved"
