@@ -75,7 +75,7 @@ const CreatePollsForm = () => {
                 </>
               )}
               {errormessage && (
-                <Message data-cy="save-poll-message" color="black" id="message">
+                <Message data-cy="save-poll-message" color="red" id="message">
                   {errormessage}
                 </Message>
               )}
