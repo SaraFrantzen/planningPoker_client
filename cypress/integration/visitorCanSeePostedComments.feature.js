@@ -13,7 +13,6 @@ describe("Visitor can see a specific poll's comments", () => {
       response: "fixture:polls_show.json",
     });
     cy.visit("/");
-    cy.get("[data-cy='poll-1']").click();
   });
 
   context("successfully", () => {
@@ -26,9 +25,10 @@ describe("Visitor can see a specific poll's comments", () => {
       });
     });
 
-    it("visitor can click on an poll and view its full content", () => {
+    it("visitor can click on an poll and view its comments", () => {
+      cy.get("[data-cy='poll-1']").click();
       cy.get("[data-cy='comment-1']").within(() => {
-        cy.get("[data-cy='body']").should("contain", "myComment");
+        cy.get("[data-cy='body']").should("contain", "First comment");
         cy.get("[data-cy='user']").should("contain", "user1");
       });
     });

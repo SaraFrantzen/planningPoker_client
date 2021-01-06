@@ -1,0 +1,8 @@
+{
+  "message": "successfully saved",
+  "comment": {
+    "id": 1,
+    "user_name": "user1",
+    "comment": "myComment"
+  }
+}

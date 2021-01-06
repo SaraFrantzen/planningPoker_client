@@ -402,7 +402,7 @@ const SinglePoll = () => {
       <Container>
        <Divider id="comments-divider"/>
         <CommentForm />
-        <CommentsIndex />
+     
       </Container>
     </>
   );
