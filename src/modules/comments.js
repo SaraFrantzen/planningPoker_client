@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Comments = {
   async index(id) {
-    let result = await axios.get(`/comments/${id}`)
+    let result = await axios.get(`/comments/${id}`);
     return result.data.comments;
   },
 
@@ -33,7 +33,6 @@ const Comments = {
       return error.response.data.message;
     }
   },
-
 };
 
 export default Comments;

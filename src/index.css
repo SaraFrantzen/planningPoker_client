@@ -122,3 +122,7 @@
 .comments-container{
    margin-bottom: 5em;
 }
+#authenticate-message{
+  width: 35em;
+  margin-bottom: 2em;
+}
