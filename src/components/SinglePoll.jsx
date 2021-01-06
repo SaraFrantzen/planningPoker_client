@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import cards3 from "../images/cards3.jpg";
 import CommentForm from "./CommentForm";
-import JoinPoll from './JoinPoll';
+import JoinPoll from "./JoinPoll";
+import ViewTeam from "./ViewTeam";
 import {
   Container,
   Card,
   Message,
   Button,
-  List,
   Form,
   Grid,
   Statistic,
@@ -29,7 +28,7 @@ const SinglePoll = () => {
 
   const [joined, setJoined] = useState(false);
   const [team, setTeam] = useState([]);
-  const [listTeam, setListTeam] = useState();
+
   const [selectedPoints, setSelectedPoints] = useState();
   const [voteMessage, setVoteMessage] = useState("");
   const [status, setStatus] = useState([]);
@@ -96,12 +95,10 @@ const SinglePoll = () => {
     }
   }, [status]);
 
- 
-
-  const ViewTeamHandler = async () => {
+  /*   const ViewTeamHandler = async () => {
     let list = team.map((team) => <li>{team}</li>);
     setListTeam(list);
-  };
+  }; */
 
   const handlePointsChange = (value) => {
     setSelectedPoints(value);
@@ -332,30 +329,15 @@ const SinglePoll = () => {
                       Re-vote
                     </Button>
                   )}
-   <JoinPoll joined={joined} setJoined={setJoined} setMessage={setMessage} setTeam={setTeam}/>
+                  <JoinPoll
+                    joined={joined}
+                    setJoined={setJoined}
+                    setMessage={setMessage}
+                    setTeam={setTeam}
+                  />
                   <Divider />
-                  {joined && (
-                    <>
-                      <>
-                        <Button
-                          basic
-                          onClick={() => ViewTeamHandler()}
-                          data-cy="view-participants"
-                          id="button"
-                          color="black"
-                        >
-                          View participants
-                        </Button>
-                        <List>
-                          <List.Item>
-                            <List.Content data-cy="team">
-                              {listTeam}
-                            </List.Content>
-                          </List.Item>
-                        </List>
-                      </>
-                    </>
-                  )}
+
+                  <ViewTeam joined={joined} team={team} />
                 </Card.Content>
               </Card>
             </Grid.Column>
