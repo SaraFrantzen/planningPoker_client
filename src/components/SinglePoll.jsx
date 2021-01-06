@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cards3 from "../images/cards3.jpg";
 import CommentForm from "./CommentForm";
+import JoinPoll from './JoinPoll';
 import {
   Container,
   Card,
@@ -95,16 +96,7 @@ const SinglePoll = () => {
     }
   }, [status]);
 
-  const joinHandler = async () => {
-    let userId = currentUser.name;
-    let response = await Polls.join(id, userId);
-    if (response.message) {
-      setTeam(response.team);
-      setJoined(true);
-    } else {
-      setMessage(response);
-    }
-  };
+ 
 
   const ViewTeamHandler = async () => {
     let list = team.map((team) => <li>{team}</li>);
@@ -340,34 +332,7 @@ const SinglePoll = () => {
                       Re-vote
                     </Button>
                   )}
-                  <>
-                    {!authenticated && (
-                      <Container>
-                        <Button
-                          basic
-                          as={Link}
-                          to="/login"
-                          id="join-button"
-                          color="red"
-                        >
-                          Join this poll
-                        </Button>
-                      </Container>
-                    )}
-                  </>
-                  {authenticated && !joined && (
-                    <Container>
-                      <Button
-                        basic
-                        color="red"
-                        onClick={() => joinHandler()}
-                        data-cy="join-poll"
-                        id="join-button"
-                      >
-                        Join this poll
-                      </Button>
-                    </Container>
-                  )}
+   <JoinPoll joined={joined} setJoined={setJoined} setMessage={setMessage} setTeam={setTeam}/>
                   <Divider />
                   {joined && (
                     <>
