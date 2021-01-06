@@ -108,6 +108,21 @@
   margin-left: 3em;
 }
 #form-comment{
-  margin-top: 5em;
+  margin-top: 2em;
   width: 50em;
+  margin-bottom: 5em;
+}
+#comments-divider{
+  margin-top: 5em;
+}
+#commentCard{
+  width:30em;
+ 
+}
+.comments-container{
+   margin-bottom: 5em;
+}
+#authenticate-message{
+  width: 35em;
+  margin-bottom: 2em;
 }

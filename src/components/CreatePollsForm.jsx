@@ -56,7 +56,11 @@ const CreatePollsForm = () => {
             <Grid.Column width={8}>
               {message && (
                 <>
-                  <Message data-cy="save-poll-message" color="black" id="message">
+                  <Message
+                    data-cy="save-poll-message"
+                    color="black"
+                    id="message"
+                  >
                     {message} ! <br />
                     Your poll can be viewed at:
                     <br />
@@ -67,7 +71,6 @@ const CreatePollsForm = () => {
                     as={Link}
                     to={`/polls/${pollId}`}
                     id="message-link"
-                    
                   >
                     https://epidemicplanningpoker.netlify.app/polls/{pollId}
                     <br />
@@ -115,7 +118,6 @@ const CreatePollsForm = () => {
             label="Image"
             data-cy="image-upload"
             type="file"
-            
           />
           <Form.Button
             data-cy="save-poll"

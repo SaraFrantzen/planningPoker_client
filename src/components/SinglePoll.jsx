@@ -397,7 +397,9 @@ const SinglePoll = () => {
           </Grid.Row>
         </Grid>
       </Container>
+
       <Container>
+        <Divider id="comments-divider" />
         <CommentForm />
       </Container>
     </>
