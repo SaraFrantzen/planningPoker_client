@@ -7,6 +7,7 @@ import CommentForm from "./CommentForm";
 import JoinPoll from "./JoinPoll";
 import ViewTeam from "./ViewTeam";
 import Vote from "./Vote";
+import HeadingSinglePoll from './HeadingSinglePoll';
 import {
   Container,
   Card,
@@ -95,35 +96,7 @@ const SinglePoll = () => {
 
   return (
     <>
-      {authenticated && !joined && (
-        <>
-          <Container id="header">
-            <h1>You need to join the poll to be able to vote</h1>
-            <Divider />
-          </Container>
-        </>
-      )}
-      {!authenticated && (
-        <>
-          <Container id="header">
-            <h1>You need to login to be able to vote</h1>
-            <Divider />
-          </Container>
-        </>
-      )}
-      {joined && !userVoted && (
-        <Container id="header" data-cy="join-poll-message" color="black">
-          <h1>You are joined to this poll</h1>
-          <Divider />
-        </Container>
-      )}
-      {joined && userVoted && (
-        <Container id="header" data-cy="user-vote-message" color="black">
-          <h1>You voted: {userVoted} in this poll</h1>
-          <Divider />
-        </Container>
-      )}
-
+     <HeadingSinglePoll userVoted={userVoted} joined={joined} authenticated={authenticated}/>
       {voteMessage && (
         <Container>
           <Message data-cy="vote-message" id="message" color="black">
@@ -170,7 +143,7 @@ const SinglePoll = () => {
                   <Divider />
                   <Card.Content id="description">Description</Card.Content>
                   <Card.Content data-cy="description">
-                    {poll.description}{" "}
+                    {poll.description}
                   </Card.Content>
 
                   <Card.Content id="tasks">Tasks </Card.Content>
