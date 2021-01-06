@@ -13,7 +13,7 @@ const CommentForm = () => {
   const authenticated = useSelector((state) => state.authenticate);
   const [comment, setComment] = useState({});
   const [postedComment, setPostedComment] = useState(false);
-  
+
   const onSubmit = async (e) => {
     e.preventDefault();
     let { comment } = e.target;

@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import cards3 from "../images/cards3.jpg";
 import CommentForm from "./CommentForm";
-import CommentsIndex from './CommentsIndex';
 import {
   Container,
   Card,
@@ -398,11 +397,10 @@ const SinglePoll = () => {
           </Grid.Row>
         </Grid>
       </Container>
-     
+
       <Container>
-       <Divider id="comments-divider"/>
+        <Divider id="comments-divider" />
         <CommentForm />
-     
       </Container>
     </>
   );
