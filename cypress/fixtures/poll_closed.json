@@ -1,0 +1,8 @@
+{
+  "message": "result successfully assigned",
+  "poll": {
+    "id": 1,
+    "state": "closed",
+    "result": 2
+  }
+}
