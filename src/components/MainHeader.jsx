@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Header, Segment, Menu, Grid, GridColumn, Button } from "semantic-ui-react";
+import React from "react";
+import { Header, Segment, Menu, Grid, GridColumn } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserSession from "../modules/auth";
@@ -11,13 +11,13 @@ const MainHeader = () => {
   const authenticated = useSelector((state) => state.authenticate);
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
-const [message, setMessage] = useState("")
+
+
   const signOutHandler = async () => {
-   
     const response = await UserSession.logout(dispatch, history);
-    debugger
-    setMessage(response) 
+   
     history.replace({ pathname: "/" });
+     return response
   };
   return (
     <>
@@ -31,18 +31,20 @@ const [message, setMessage] = useState("")
                 </Menu.Item>
               </GridColumn>
               <GridColumn width={6}>
-                
                 {authenticated ? (
                   <>
-                  <p id="login-txt">You're logged in with: {currentUser.email}</p>
-                  <Menu.Item onClick={() => signOutHandler()} id="logout">Sign Out</Menu.Item>
-                    </>
+                    <p id="login-txt">
+                      You're logged in with: {currentUser.email}
+                    </p>
+                    <Menu.Item onClick={() => signOutHandler()} id="logout">
+                      Sign Out
+                    </Menu.Item>
+                  </>
                 ) : (
                   <Menu.Item as={Link} to="/login" data-cy="login" id="login">
                     Login
                   </Menu.Item>
                 )}
-              
               </GridColumn>
             </Grid.Row>
           </Grid>
