@@ -2,6 +2,10 @@
   "message": "Voting succesfully closed",
   "poll": {
     "id": 1,
-    "state": "pending"
+    "state": "pending",
+    "votes": {
+      "user1": 2,
+      "user2": 3
+    }
   }
 }

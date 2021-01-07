@@ -37,13 +37,13 @@ const Vote = ({
     if (response.message === "successfully voted") {
       setVoteMessage(
         `You ${response.message} ${
-          response.votes[currentUser.email]
+          response.votes[currentUser.name]
         } in this poll`
       );
       setStatus(response.points);
       setVotes(response.votes);
       setVoteToggle(false);
-      setUserVoted(response.votes[currentUser.email]);
+      setUserVoted(response.votes[currentUser.name]);
 
       setMessage("");
     } else if (response.message === "successfully un-voted") {

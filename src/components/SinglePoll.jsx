@@ -211,7 +211,7 @@ const SinglePoll = () => {
                   <Divider />
                   {joined && state !== "pending" && (
                     <>
-                      <CloseVoting setState={setState} />
+                      <CloseVoting setState={setState} setVotes={setVotes}/>
                       <Divider />
                     </>
                   )}

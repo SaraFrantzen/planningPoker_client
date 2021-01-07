@@ -3,7 +3,7 @@ import { Button, Message } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import Polls from "../modules/polls";
 
-const CloseVoting = ({ setState }) => {
+const CloseVoting = ({ setState, setVotes }) => {
   const [confirm, setConfirm] = useState(false);
   const { id } = useParams();
   const [message, setMessage] = useState("");
@@ -13,6 +13,7 @@ const CloseVoting = ({ setState }) => {
     if (response.message) {
       setMessage(response.message);
       setState(response.state);
+      setVotes(response.votes)
     } else {
       setMessage(response);
     }

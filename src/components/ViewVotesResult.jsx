@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, List, Grid } from "semantic-ui-react";
 
 const ViewVotesResult = ({ votes }) => {
-
   const names = Object.keys(votes);
   const points = Object.values(votes);
 
@@ -20,7 +19,7 @@ const ViewVotesResult = ({ votes }) => {
         <Button
           basic
           onClick={() => ViewVotesHandler()}
-          data-cy="view-participants"
+          data-cy="view-votesResult"
           id="button"
           color="black"
         >
@@ -28,17 +27,17 @@ const ViewVotesResult = ({ votes }) => {
         </Button>
         <Grid>
           <Grid.Row>
-            <Grid.Column width={8}>
+            <Grid.Column width={3}>
               <List>
                 <List.Item>
-                  <List.Content data-cy="team">{listOfNames}</List.Content>
+                  <List.Content data-cy="names">{listOfNames}</List.Content>
                 </List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={2}>
               <List>
                 <List.Item>
-                  <List.Content data-cy="team">{listOfPoints}</List.Content>
+                  <List.Content data-cy="points">{listOfPoints}</List.Content>
                 </List.Item>
               </List>
             </Grid.Column>
