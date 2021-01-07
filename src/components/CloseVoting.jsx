@@ -7,14 +7,14 @@ const CloseVoting = ({ setState }) => {
   const [confirm, setConfirm] = useState(false);
   const { id } = useParams();
   const [message, setMessage] = useState("");
-
+	
   const closeVoteHandler = async () => {
     let response = await Polls.close(id);
     if (response.message) {
       setMessage(response.message);
       setState(response.state);
     } else {
-        setMessage(response)
+      setMessage(response);
     }
   };
 

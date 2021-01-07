@@ -10,6 +10,7 @@ import Vote from "./Vote";
 import HeadingSinglePoll from "./HeadingSinglePoll";
 import VotingStatus from "./VotingStatus";
 import CloseVoting from "./CloseVoting";
+import ViewVotesResult from "./ViewVotesResult";
 import {
   Container,
   Card,
@@ -39,14 +40,14 @@ const SinglePoll = () => {
   const [votes, setVotes] = useState([]);
 
   useEffect(() => {
-    debugger
     const getSinglePoll = async () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
         setStatus(response.points);
+        setState(response.state);
         if (response.votes != null) {
-          setVotes(response.votes)
+          setVotes(response.votes);
           if (currentUser.email in response.votes) {
             setUserVoted(response.votes[currentUser.email]);
             setVoteToggle(false);
@@ -97,7 +98,6 @@ const SinglePoll = () => {
 
   return (
     <>
-    
       <HeadingSinglePoll
         userVoted={userVoted}
         joined={joined}
@@ -176,40 +176,51 @@ const SinglePoll = () => {
 
                   <Divider />
 
-                  {state !== 'pending' ? (
+                  {state !== "pending" ? (
                     <Vote
-                    voteToggle={voteToggle}
-                    joined={joined}
-                    setStatus={setStatus}
-                    setVoteMessage={setVoteMessage}
-                    setUserVoted={setUserVoted}
-                    setVoteToggle={setVoteToggle}
-                    setMessage={setMessage}
-                    setStatus0={setStatus0}
-                    setStatus1={setStatus1}
-                    setStatus2={setStatus2}
-                    setStatus3={setStatus3}
-                    status0={status0}
-                    status1={status1}
-                    status2={status2}
-                    status3={status3}
-                  />
+                      voteToggle={voteToggle}
+                      joined={joined}
+                      setStatus={setStatus}
+                      setVoteMessage={setVoteMessage}
+                      setUserVoted={setUserVoted}
+                      setVoteToggle={setVoteToggle}
+                      setMessage={setMessage}
+                      setStatus0={setStatus0}
+                      setStatus1={setStatus1}
+                      setStatus2={setStatus2}
+                      setStatus3={setStatus3}
+                      status0={status0}
+                      status1={status1}
+                      status2={status2}
+                      status3={status3}
+                    />
                   ) : (
                     <>
-                <p>hejhej</p> 
-              {votes}
-                </>
-                  )} 
-                  <JoinPoll
-                    joined={joined}
-                    setJoined={setJoined}
-                    setMessage={setMessage}
-                    setTeam={setTeam}
-                  />
+                      <Message color="black">poll is closed</Message>
+                    </>
+                  )}
+                  {state !== "pending" && (
+                    <JoinPoll
+                      joined={joined}
+                      setJoined={setJoined}
+                      setMessage={setMessage}
+                      setTeam={setTeam}
+                    />
+                  )}
+
                   <Divider />
-{joined && <CloseVoting setState={setState} />}
-                  <Divider />
-                  <ViewTeam joined={joined} team={team} />
+                  {joined && state !== "pending" && (
+                    <>
+                      <CloseVoting setState={setState} />
+                      <Divider />
+                    </>
+                  )}
+
+                  {state === "pending" ? (
+                    <ViewVotesResult votes={votes} />
+                  ) : (
+                    <ViewTeam joined={joined} team={team} />
+                  )}
                 </Card.Content>
               </Card>
             </Grid.Column>
