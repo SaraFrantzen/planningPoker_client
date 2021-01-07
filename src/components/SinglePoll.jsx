@@ -46,10 +46,11 @@ const SinglePoll = () => {
         setPoll(response);
         setStatus(response.points);
         setState(response.state);
+        setTeam(response.team)
         if (response.votes != null) {
           setVotes(response.votes);
-          if (currentUser.email in response.votes) {
-            setUserVoted(response.votes[currentUser.email]);
+          if (currentUser.name in response.votes) {
+            setUserVoted(response.votes[currentUser.name]);
             setVoteToggle(false);
           }
         }
@@ -58,7 +59,7 @@ const SinglePoll = () => {
       }
     };
     getSinglePoll();
-  }, [id, currentUser.email]);
+  }, [id, currentUser.name]);
 
   useEffect(() => {
     const teamChecker = async () => {
