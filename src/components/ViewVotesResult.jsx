@@ -20,7 +20,7 @@ const ViewVotesResult = ({ votes }) => {
           basic
           onClick={() => ViewVotesHandler()}
           data-cy="view-votesResult"
-          id="button"
+          id="votingResult-button"
           color="black"
         >
           View votes

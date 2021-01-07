@@ -10,7 +10,7 @@ describe("Visitor can see a specific poll's comments", () => {
     cy.route({
       method: "GET",
       url: "http://localhost:3000/api/polls/1",
-      response: "fixture:polls_show.json",
+      response: "fixture:poll_show_state_pending.json",
     });
     cy.visit("/");
   });

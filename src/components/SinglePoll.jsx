@@ -211,7 +211,7 @@ const SinglePoll = () => {
                   <Divider />
                   {joined && state !== "pending" && (
                     <>
-                      <CloseVoting setState={setState} setVotes={setVotes}/>
+                      <CloseVoting setState={setState} setVotes={setVotes} />
                       <Divider />
                     </>
                   )}
@@ -228,10 +228,12 @@ const SinglePoll = () => {
         </Grid>
       </Container>
 
-      <Container>
-        <Divider id="comments-divider" />
-        <CommentForm />
-      </Container>
+      {state === "pending" && (
+        <Container>
+          <Divider id="comments-divider" />
+          <CommentForm />
+        </Container>
+      )}
     </>
   );
 };

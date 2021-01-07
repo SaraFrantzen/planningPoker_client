@@ -60,7 +60,7 @@ const CloseVoting = ({ setState, setVotes }) => {
       )}
       {message && (
         <>
-          <Message data-cy="message">{message}</Message>
+          <Message data-cy="message" color="black">{message}</Message>
         </>
       )}
     </>

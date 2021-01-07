@@ -9,7 +9,7 @@ describe("User can vote", () => {
     cy.route({
       method: "GET",
       url: "http://localhost:3000/api/polls/1",
-      response: "fixture:polls_show.json",
+      response: "fixture:poll_show_state_ongoing.json",
     });
     cy.route({
       method: "PUT",
@@ -27,7 +27,7 @@ describe("User can vote", () => {
       cy.route({
         method: "PUT",
         url: "http://localhost:3000/api/polls/1",
-        response: "fixture:polls_update.json",
+        response: "fixture:polls_vote.json",
       });
     });
 
