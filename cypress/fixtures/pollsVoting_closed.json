@@ -1,0 +1,12 @@
+{
+  "message": "Voting succesfully closed",
+  "poll": {
+    "id": 1,
+    "state": "pending",
+    "votes": {
+      "user@epidemic.com": 2,
+      "user1@epidemic.com": 2,
+      "user2@epidemic.com": 1
+    }
+  }
+}
