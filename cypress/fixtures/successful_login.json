@@ -6,6 +6,6 @@
     "provider": "email",
     "uid": "user@epidemic.com",
     "allow_password_change": false,
-    "name": "Sara"
+    "name": "user"
   }
 }

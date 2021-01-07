@@ -9,7 +9,7 @@ describe("User can join a poll", () => {
     cy.route({
       method: "GET",
       url: "http://localhost:3000/api/polls/1",
-      response: "fixture:polls_show.json",
+      response: "fixture:poll_show_state_ongoing.json",
     });
     cy.visit("/");
     cy.login();

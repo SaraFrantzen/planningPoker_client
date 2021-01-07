@@ -5,6 +5,7 @@
     "description": "As an API. In order to provide a list of polls in DB. I would like to provide an index endpoint for polls",
     "tasks": "Index action. Routes to that action. Polls model: title, description. Polls index in serializer.",
     "points": [2],
-    "image": "https://user-images.githubusercontent.com/68189237/103536110-310c1800-4e92-11eb-87ca-86eef4f147b8.jpg"
+    "image": "https://user-images.githubusercontent.com/68189237/103536110-310c1800-4e92-11eb-87ca-86eef4f147b8.jpg",
+    "state": "pending"
   }
 }

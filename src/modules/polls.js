@@ -81,6 +81,24 @@ const Polls = {
       return error.response.data.error_message;
     }
   },
+
+  async close(id) {
+    let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
+    try {
+      let response = await axios.put(
+        `/polls/${id}`,
+        {
+          state: 'pending',
+        },
+        {
+          headers: headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error.response.data.error_message;
+    }
+  },
 };
 
 export default Polls;
