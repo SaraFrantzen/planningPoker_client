@@ -17,6 +17,10 @@
   margin-left: 18em;
   color: white;
 }
+#logout{
+  font-size: 0.6em;
+  color: white;
+}
 #login-txt {
   font-size: 0.4em;
 }

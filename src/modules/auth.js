@@ -11,22 +11,36 @@ const auth = new JtockAuth({
   host: apiUrl,
 });
 
-const login = async (event, dispatch, history) => {
-  event.preventDefault();
-  try {
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const response = await auth.signIn(email, password);
+const UserSession = {
+  async login(event, dispatch, history) {
+    event.preventDefault();
+    try {
+      const email = event.target.email.value;
+      const password = event.target.password.value;
+      const response = await auth.signIn(email, password);
+      dispatch({
+        type: "AUTHENTICATE",
+        payload: {
+          currentUser: { email: response.data.email, name: response.data.name },
+          authenticate: true,
+        },
+      });
+    } catch (error) {
+      return error.response.data.errors[0];
+    }
+  },
+
+  async logout(dispatch) {
+    const response = await auth.signOut();
     dispatch({
       type: "AUTHENTICATE",
       payload: {
-        currentUser: { email: response.data.email, name: response.data.name },
-        authenticate: true,
+        currentUser: {},
+        authenticate: false,
       },
     });
-  } catch (error) {
-    return error.response.data.errors[0];
-  }
+    return response;
+  },
 };
 
-export { login };
+export default UserSession;
