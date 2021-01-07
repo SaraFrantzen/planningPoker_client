@@ -63,7 +63,7 @@ describe("User can create poll", () => {
       cy.visit("/create");
     });
 
-    it("unsuccessfully without title", () => {
+    it("unsuccessfully not authorized", () => {
       cy.get('[data-cy="login-message"]').contains(
         "Before you can create or join a poll, you just need to login"
       );
