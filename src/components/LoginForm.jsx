@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, Form, Container, Message, Divider } from "semantic-ui-react";
-import { login } from "../modules/auth";
+import UserSession from "../modules/auth";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const LoginForm = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    const response = await login(e, dispatch, history);
+    const response = await UserSession.login(e, dispatch, history);
     setMessage(response);
     history.replace({ pathname: "/" });
   };
