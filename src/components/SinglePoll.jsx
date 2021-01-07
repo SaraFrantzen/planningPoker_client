@@ -7,8 +7,9 @@ import CommentForm from "./CommentForm";
 import JoinPoll from "./JoinPoll";
 import ViewTeam from "./ViewTeam";
 import Vote from "./Vote";
-import HeadingSinglePoll from './HeadingSinglePoll';
-import VotingStatus from './VotingStatus';
+import HeadingSinglePoll from "./HeadingSinglePoll";
+import VotingStatus from "./VotingStatus";
+import CloseVoting from "./CloseVoting";
 import {
   Container,
   Card,
@@ -22,30 +23,30 @@ const SinglePoll = () => {
   const [poll, setPoll] = useState({});
   const { id } = useParams();
   const [message, setMessage] = useState("");
-
   const authenticated = useSelector((state) => state.authenticate);
   const currentUser = useSelector((state) => state.currentUser);
-
   const [joined, setJoined] = useState(false);
   const [team, setTeam] = useState([]);
-
   const [voteMessage, setVoteMessage] = useState("");
   const [status, setStatus] = useState([]);
-
   const [voteToggle, setVoteToggle] = useState(true);
   const [userVoted, setUserVoted] = useState();
   const [status0, setStatus0] = useState(0);
   const [status1, setStatus1] = useState(0);
   const [status2, setStatus2] = useState(0);
   const [status3, setStatus3] = useState(0);
+  const [state, setState] = useState("");
+  const [votes, setVotes] = useState([]);
 
   useEffect(() => {
+    debugger
     const getSinglePoll = async () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
         setStatus(response.points);
         if (response.votes != null) {
+          setVotes(response.votes)
           if (currentUser.email in response.votes) {
             setUserVoted(response.votes[currentUser.email]);
             setVoteToggle(false);
@@ -96,7 +97,12 @@ const SinglePoll = () => {
 
   return (
     <>
-     <HeadingSinglePoll userVoted={userVoted} joined={joined} authenticated={authenticated}/>
+    
+      <HeadingSinglePoll
+        userVoted={userVoted}
+        joined={joined}
+        authenticated={authenticated}
+      />
       {voteMessage && (
         <Container>
           <Message data-cy="vote-message" id="message" color="black">
@@ -161,14 +167,17 @@ const SinglePoll = () => {
                 </Card.Content>
 
                 <Card.Content data-cy="points">
-                 <VotingStatus  status0={status0}
+                  <VotingStatus
+                    status0={status0}
                     status1={status1}
                     status2={status2}
-                    status3={status3} />
+                    status3={status3}
+                  />
 
                   <Divider />
 
-                  <Vote
+                  {state !== 'pending' ? (
+                    <Vote
                     voteToggle={voteToggle}
                     joined={joined}
                     setStatus={setStatus}
@@ -185,6 +194,12 @@ const SinglePoll = () => {
                     status2={status2}
                     status3={status3}
                   />
+                  ) : (
+                    <>
+                <p>hejhej</p> 
+              {votes}
+                </>
+                  )} 
                   <JoinPoll
                     joined={joined}
                     setJoined={setJoined}
@@ -192,7 +207,8 @@ const SinglePoll = () => {
                     setTeam={setTeam}
                   />
                   <Divider />
-
+{joined && <CloseVoting setState={setState} />}
+                  <Divider />
                   <ViewTeam joined={joined} team={team} />
                 </Card.Content>
               </Card>
