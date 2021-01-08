@@ -8,10 +8,13 @@ const Vote = ({
   joined,
   setVoteToggle,
   voteToggle,
-  setStatus,
+  votes,
+  setSuperArray,
+  superArray,
   setVoteMessage,
   setUserVoted,
   setMessage,
+setVotes,
   setStatus0,
   setStatus1,
   setStatus2,
@@ -22,7 +25,9 @@ const Vote = ({
   status3,
 }) => {
   const [selectedPoints, setSelectedPoints] = useState();
-  const [votes, setVotes] = useState({});
+
+  
+
   const { id } = useParams();
   const authenticated = useSelector((state) => state.authenticate);
   const currentUser = useSelector((state) => state.currentUser);
@@ -30,32 +35,39 @@ const Vote = ({
   const handlePointsChange = (value) => {
     setSelectedPoints(value);
   };
+  
 
   const voteHandler = async () => {
     let points = selectedPoints;
-    const response = await Polls.vote(id, points, votes);
+
+    const response = await Polls.vote(id, points);
     if (response.message === "successfully voted") {
       setVoteMessage(
         `You ${response.message} ${
           response.votes[currentUser.name]
         } in this poll`
       );
-      setStatus(response.points);
-      setVotes(response.votes);
+      /* setVotes(response.votes); */
       setVoteToggle(false);
       setUserVoted(response.votes[currentUser.name]);
-
       setMessage("");
+      setSuperArray(Object.values(response.votes))
+
+
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
       setMessage("");
-      setStatus(response.points);
+      debugger
+      setSuperArray(Object.values(response.votes))
       setUserVoted();
-      setStatus0(status0 - 1);
-      setStatus1(status1 - 1);
-      setStatus2(status2 - 1);
-      setStatus3(status3 - 1);
-      let statusCounter = response.points;
+  
+      /* setVotes(response.votes) */
+
+
+
+
+/*       const pointsArray = Object.values(votes);
+      let statusCounter = pointsArray 
       let zero = 0;
       let one = 0;
       let two = 0;
@@ -74,8 +86,8 @@ const Vote = ({
           three++;
           setStatus3(three);
         }
-      }
-      setVotes(response.votes);
+      } */
+    
       setVoteToggle(true);
     } else {
       setMessage(response);

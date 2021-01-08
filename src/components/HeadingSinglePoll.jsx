@@ -26,12 +26,15 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
           <Divider />
         </Container>
       )}
+      
       {joined && userVoted &&  state === "ongoing" &&(
         <Container id="heading" data-cy="user-vote-message" color="black">
           <h1>You voted: {userVoted} in this poll</h1>
           <Divider />
         </Container>
       )}
+
+
         {state === "pending" && (
         <Container id="heading" data-cy="pending-header" color="black">
           <h1>Poll is open for discussion. Points are pending </h1>

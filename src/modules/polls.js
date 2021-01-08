@@ -79,7 +79,7 @@ const Polls = {
       let response = await axios.put(
         `/polls/${id}`,
         {
-          points: points,
+       
           votes: { email, points },
         },
         {
