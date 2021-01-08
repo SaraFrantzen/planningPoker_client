@@ -26,7 +26,6 @@ const Polls = {
   },
 
   async create(title, description, tasks, image, category) {
-    debugger
     let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
     try {
       let result = await axios.post(
