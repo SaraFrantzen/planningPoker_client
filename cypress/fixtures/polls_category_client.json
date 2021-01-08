@@ -1,0 +1,16 @@
+{
+  "polls": [
+    {
+      "id": 2,
+      "title": "Visitor can see list of polls",
+      "description": "As a visitor. In order to see what polls there are. I would like to see the polls listed on a page",
+      "category": "client"
+    },
+    {
+      "id": 4,
+      "title": "User can create polls",
+      "description": "As a user. In order to make my polls public. I would like to be able to post my polls",
+      "category": "client"
+    }
+  ]
+}
