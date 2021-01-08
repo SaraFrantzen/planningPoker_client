@@ -9,8 +9,9 @@ const Polls = {
       } else {
         result = await axios.get("/polls");
       }
-      return result.data.polls;
+      return result.data;
     } catch (error) {
+      
       return error.response.data.error;
     }
   },

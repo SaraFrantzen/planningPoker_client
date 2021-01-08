@@ -18,17 +18,17 @@ describe("visitor can see all listed polls", () => {
     });
 
     cy.visit("/");
-	});
-	
-	context("Visitor can see categories", () => {
+  });
+
+  context("Visitor can see categories", () => {
     it("visitor can see different categories in the header", () => {
       cy.get("[data-cy='home']").should("contain", "Planning Poker");
       cy.get("[data-cy='api']").should("contain", "api");
       cy.get("[data-cy='client']").should("contain", "client");
     });
-	});
-	
-	context("successfully - api", () => {
+  });
+
+  context("successfully - api", () => {
     it("Visitor can see the polls in the api category", () => {
       cy.get("[data-cy='api']").click();
       cy.get("[data-cy='poll-3']").within(() => {
@@ -42,6 +42,27 @@ describe("visitor can see all listed polls", () => {
       cy.get("[data-cy='poll-2']").within(() => {
         cy.contains("Visitor can see list of polls");
       });
+    });
+  });
+});
+
+describe("Vistor gets error message if invalid category in query param", () => {
+  beforeEach(() => {
+    cy.server();
+    cy.route({
+      method: "GET",
+      url: "http://localhost:3000/api/category/?category=totallyWrongCategory",
+      response: { message: "Sorry, we don't have that category" },
+    });
+    cy.visit("/category/totallyWrongCategory");
+  });
+
+  context("invalid category", () => {
+    it("error message is displayed", () => {
+      cy.get("[data-cy='error-message']").should(
+        "contain",
+        "Sorry, we don't have that category"
+      );
     });
   });
 });
