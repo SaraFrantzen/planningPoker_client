@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Polls from "../modules/polls";
 import PollsCard from "./PollsCard";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import cards2 from "../images/cards2.jpg";
 import ess2 from "../images/ess2.png";
@@ -9,15 +9,16 @@ import { Container, Grid, Button, Image } from "semantic-ui-react";
 
 const PollsIndex = () => {
   const [polls, setPolls] = useState([]);
+  const {category} = useParams();
   const authenticated = useSelector((state) => state.authenticate);
 
   useEffect(() => {
     const getPollsIndex = async () => {
-      const fetchPolls = await Polls.index();
+      const fetchPolls = await Polls.index(category);
       setPolls(fetchPolls);
     };
     getPollsIndex();
-  }, []);
+  }, [category]);
 
   return (
     <>
@@ -32,7 +33,7 @@ const PollsIndex = () => {
             data-cy="createPoll"
             id="create-button"
           >
-            Create new poll
+            Create new feature for poll
           </Button>
         ) : (
           <Button

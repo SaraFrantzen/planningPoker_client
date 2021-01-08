@@ -8,27 +8,27 @@ describe("visitor can see all listed polls", () => {
     });
     cy.route({
       method: "GET",
-      url: "http://localhost:3000/api/polls",
+      url: "http://localhost:3000/api/polls/?category=api",
       response: "fixture:polls_category_api.json",
     });
     cy.route({
       method: "GET",
-      url: "http://localhost:3000/api/polls",
+      url: "http://localhost:3000/api/polls/?category=client",
       response: "fixture:polls_category_client.json",
     });
 
     cy.visit("/");
-  });
-
-  context("Visitor can see categories", () => {
+	});
+	
+	context("Visitor can see categories", () => {
     it("visitor can see different categories in the header", () => {
       cy.get("[data-cy='home']").should("contain", "Planning Poker");
       cy.get("[data-cy='api']").should("contain", "api");
       cy.get("[data-cy='client']").should("contain", "client");
     });
-  });
-
-  context("successfully - api", () => {
+	});
+	
+	context("successfully - api", () => {
     it("Visitor can see the polls in the api category", () => {
       cy.get("[data-cy='api']").click();
       cy.get("[data-cy='poll-3']").within(() => {

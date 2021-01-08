@@ -1,9 +1,18 @@
 import axios from "axios";
 
 const Polls = {
-  async index() {
-    let result = await axios.get("/polls");
-    return result.data.polls;
+  async index(category) {
+    try {
+      let result;
+      if (category) {
+        result = await axios.get(`/polls/?category=${category}`);
+      } else {
+        result = await axios.get("/polls");
+      }
+      return result.data.polls;
+    } catch (error) {
+      return error.response.data.error;
+    }
   },
 
   async show(pollId) {
