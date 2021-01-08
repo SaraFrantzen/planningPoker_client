@@ -36,33 +36,13 @@ describe("visitor can see all listed polls", () => {
       });
     });
   });
+  
   context("successfully - client", () => {
     it("Visitor can see the polls in the client category", () => {
       cy.get("[data-cy='client']").click();
       cy.get("[data-cy='poll-2']").within(() => {
         cy.contains("Visitor can see list of polls");
       });
-    });
-  });
-});
-
-describe("Vistor gets error message if invalid category in query param", () => {
-  beforeEach(() => {
-    cy.server();
-    cy.route({
-      method: "GET",
-      url: "http://localhost:3000/api/category/?category=totallyWrongCategory",
-      response: { message: "Sorry, we don't have that category" },
-    });
-    cy.visit("/category/totallyWrongCategory");
-  });
-
-  context("invalid category", () => {
-    it("error message is displayed", () => {
-      cy.get("[data-cy='error-message']").should(
-        "contain",
-        "Sorry, we don't have that category"
-      );
     });
   });
 });
