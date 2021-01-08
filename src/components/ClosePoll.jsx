@@ -6,7 +6,8 @@ import Polls from "../modules/polls";
 const ClosePoll = ({ setState, setResult, state }) => {
   const [toggleSelect, setToggleSelect] = useState(false);
   const [selectedPoints, setSelectedPoints] = useState();
-  const [message, setMessage] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("")
   const { id } = useParams();
 
   const assignPointsHandler = async () => {
@@ -14,10 +15,10 @@ const ClosePoll = ({ setState, setResult, state }) => {
     const response = await Polls.assign(id, result);
     if (response.message) {
       setState(response.state);
-      setMessage(response.message);
+
       setResult(response.result);
     } else {
-      setMessage(response);
+      setErrorMessage(response);
     }
   };
 
@@ -33,10 +34,10 @@ const ClosePoll = ({ setState, setResult, state }) => {
 
   return (
     <>
-      {message && (
+      {errorMessage && (
         <>
-          <Message data-cy="assign-message" color="black">
-            {message}
+          <Message data-cy="error-message" color="black">
+            {errorMessage}
           </Message>
         </>
       )}
@@ -49,7 +50,7 @@ const ClosePoll = ({ setState, setResult, state }) => {
           color="red"
           data-cy="assign"
         >
-          Assing points
+          Assign points
         </Button>
       )}
       {toggleSelect && state !== "closed" && (

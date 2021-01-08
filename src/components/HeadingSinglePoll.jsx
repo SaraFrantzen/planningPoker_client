@@ -12,7 +12,7 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
           </Container>
         </>
       )}
-      {!authenticated && state !== "closed" && (
+      {!authenticated && state === "ongoing"  && (
         <>
           <Container id="header">
             <h1>You need to login to be able to vote</h1>
@@ -20,7 +20,7 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
           </Container>
         </>
       )}
-      {joined && !userVoted && state !== "closed" && (
+      {joined && !userVoted && state === "ongoing" && (
         <Container id="header" data-cy="join-poll-message" color="black">
           <h1>You are joined to this poll</h1>
           <Divider />
@@ -33,7 +33,7 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
         </Container>
       )}
         {state === "pending" && (
-        <Container id="header" data-cy="poll-closed-message" color="black">
+        <Container id="header" data-cy="pending-header" color="black">
           <h1>Poll is open for discussion. Points are pending </h1>
           <Divider />
         </Container>

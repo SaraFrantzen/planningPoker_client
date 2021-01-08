@@ -192,7 +192,7 @@ const SinglePoll = () => {
                 )}
 
                 <Card.Content>
-                  {state === "ongoing" ? (
+                  {authenticated && state === "ongoing" ? (
                     <Vote
                       voteToggle={voteToggle}
                       joined={joined}
@@ -212,17 +212,28 @@ const SinglePoll = () => {
                     />
                   ) : (
                     <>
-                      {state === "pending" && (
-                        <Message color="black">voting is closed</Message>
+                      {state === "pending" && authenticated && (
+                        <Message color="black" data-cy="voting-closed-message">
+                          voting is closed
+                        </Message>
                       )}
-                        {state === "closed" && (
-                        <Message color="black">Poll is completed</Message>
+                      {state === "pending" && !authenticated && (
+                        <Message color="black" data-cy="voting-closed-message">
+                          voting is closed, sign in to assign points
+                        </Message>
                       )}
-                      <ClosePoll
-                        setState={setState}
-                        setResult={setResult}
-                        state={state}
-                      />
+                      {state === "closed" && (
+                        <Message color="black" data-cy="poll-closed-message">
+                          Poll is completed
+                        </Message>
+                      )}
+                      {authenticated && (
+                        <ClosePoll
+                          setState={setState}
+                          setResult={setResult}
+                          state={state}
+                        />
+                      )}
                     </>
                   )}
                   {state === "ongoing" && (
@@ -235,7 +246,7 @@ const SinglePoll = () => {
                   )}
 
                   <Divider />
-                  {joined && state === "ongoing" && (
+                  {authenticated && joined && state === "ongoing" && (
                     <>
                       <CloseVoting setState={setState} setVotes={setVotes} />
                       <Divider />

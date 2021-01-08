@@ -6,22 +6,25 @@ import Polls from "../modules/polls";
 const CloseVoting = ({ setState, setVotes }) => {
   const [confirm, setConfirm] = useState(false);
   const { id } = useParams();
-  const [message, setMessage] = useState("");
-	
+  const [votingIsOpen, setvotingIsOpen] = useState(true)
+const [errorMessage, setErrorMessage] = useState("")
+
   const closeVoteHandler = async () => {
     let response = await Polls.close(id);
     if (response.message) {
-      setMessage(response.message);
       setState(response.state);
       setVotes(response.votes)
+      setvotingIsOpen(false)
     } else {
-      setMessage(response);
+      setErrorMessage(response);
     }
   };
 
+
+
   return (
     <>
-      {!confirm && !message && (
+      {!confirm && votingIsOpen && (
         <Button
           onClick={() => setConfirm(true)}
           id="button"
@@ -32,7 +35,7 @@ const CloseVoting = ({ setState, setVotes }) => {
           Close Poll
         </Button>
       )}
-      {confirm && !message && (
+      {confirm && votingIsOpen && (
         <>
           <Message color="red">
             Are you sure you want to end the vote?
@@ -56,15 +59,16 @@ const CloseVoting = ({ setState, setVotes }) => {
           >
             End vote
           </Button>
+          {errorMessage && (
+             <Message data-cy="error-message" color="red">
+           {errorMessage}
+           </Message>
+          )}
         </>
       )}
-      {message && (
-        <>
-          <Message data-cy="message" color="black">{message}</Message>
-        </>
-      )}
+  
     </>
   );
 };
 
-export default CloseVoting;
+export default CloseVoting 
