@@ -26,9 +26,11 @@ describe("User can create poll", () => {
         cy.get('[data-cy="title"]').type("Title");
         cy.get('[data-cy="description"]').type("description");
         cy.get('[data-cy="tasks"]').type("tasks");
+        cy.get('[data-cy="api"]').click({ multiple: true });
       });
       cy.file_upload("img.jpeg", "[data-cy='image-upload']", "image/jpeg");
-      cy.get('[data-cy="save-poll"]').contains("Save Poll").click();
+
+      cy.get('[data-cy="save-poll"]').contains("Save Feature").click();
       cy.get('[data-cy="save-poll-message"]').should(
         "contain",
         "successfully saved"
@@ -49,8 +51,9 @@ describe("User can create poll", () => {
       cy.get('[data-cy="form-poll"]').within(() => {
         cy.get('[data-cy="description"]').type("description");
         cy.get('[data-cy="tasks"]').type("tasks");
+        cy.get('[data-cy="api"]').click({ multiple: true });
       });
-      cy.get('[data-cy="save-poll"]').contains("Save Poll").click();
+      cy.get('[data-cy="save-poll"]').contains("Save Feature").click();
       cy.get('[data-cy="save-poll-message"]').should(
         "contain",
         "Title can't be blank"

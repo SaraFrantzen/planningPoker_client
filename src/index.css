@@ -11,22 +11,44 @@
   font-family: "Rock Salt", cursive;
   font-size: 3em;
   padding: 0.3em;
+  margin-top: 0.1em;
+  margin-bottom: 0.8em;
+}
+#heading {
+  padding-top: 2em;
+}
+#subheader {
+  background-color: #950000;
+  height: 3.5em;
 }
 #login {
-  font-size: 0.6em;
-  margin-left: 18em;
+  font-size: 1.5em;
   color: white;
-}
-#logout{
-  font-size: 0.6em;
-  color: white;
+  font-family: "Rock Salt", cursive;
   cursor: pointer;
 }
+#sort-features {
+  font-size: 1.2em;
+  color: black;
+  font-family: "Rock Salt", cursive;
+  margin-left: 2em;
+}
+#category {
+  margin-left: 2em;
+  color: white;
+}
+#categoryClient {
+  margin-left: 0.5em;
+  color: white;
+}
+
 #login-txt {
   font-size: 0.4em;
+  margin-top: 1.5em;
 }
 #planningPoker {
   color: white;
+  padding-bottom: 3em;
 }
 #login-container {
   padding-right: 45em;
@@ -98,7 +120,7 @@
 }
 
 #singlePoll-card {
-  margin-top: 5em;
+  margin-top: 2em;
 }
 
 #image2 {

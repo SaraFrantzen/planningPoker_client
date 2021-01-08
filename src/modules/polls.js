@@ -1,9 +1,19 @@
 import axios from "axios";
 
 const Polls = {
-  async index() {
-    let result = await axios.get("/polls");
-    return result.data.polls;
+  async index(category) {
+    try {
+      let result;
+      if (category) {
+        result = await axios.get(`/polls/?category=${category}`);
+      } else {
+        result = await axios.get("/polls");
+      }
+      return result.data;
+    } catch (error) {
+      
+      return error.response.data.error;
+    }
   },
 
   async show(pollId) {
@@ -15,7 +25,7 @@ const Polls = {
     }
   },
 
-  async create(title, description, tasks, image) {
+  async create(title, description, tasks, image, category) {
     let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
     try {
       let result = await axios.post(
@@ -25,6 +35,7 @@ const Polls = {
             title: title.value,
             description: description.value,
             tasks: tasks.value,
+            category: category,
             image: image,
           },
         },

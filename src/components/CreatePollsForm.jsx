@@ -18,12 +18,15 @@ const CreatePollsForm = () => {
   const [pollId, setPollId] = useState();
   const [image, setImage] = useState();
   const [errormessage, setErrormessage] = useState("");
+  const [value, setValue] = useState();
+
   const selectImage = (e) => {
     setImage(e.target.files[0]);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    let category = value;
     let { title, description, tasks, encodedImage } = e.target;
     if (image) {
       encodedImage = await toBase64(image);
@@ -32,7 +35,8 @@ const CreatePollsForm = () => {
       title,
       description,
       tasks,
-      encodedImage
+      encodedImage,
+      category
     );
     if (response.message) {
       setMessage(response.message);
@@ -78,7 +82,7 @@ const CreatePollsForm = () => {
                 </>
               )}
               {errormessage && (
-                <Message data-cy="save-poll-message" color="red" id="message">
+                <Message data-cy="error-message" color="red" id="message">
                   {errormessage}
                 </Message>
               )}
@@ -115,10 +119,29 @@ const CreatePollsForm = () => {
           <Form.Input
             onChange={selectImage}
             fluid
-            label="Image"
+            label="Attach image of Lo-fi (optional)"
             data-cy="image-upload"
             type="file"
           />
+
+          <Form.Group inline>
+            <label>Category</label>
+            <Form.Checkbox
+            data-cy="api"
+              label="api"
+              value="a"
+              checked={value === "api"}
+              onChange={() => setValue("api")}
+            />
+            <Form.Checkbox
+             data-cy="client"
+              label="client"
+              value="c"
+              checked={value === "client"}
+              onChange={() => setValue("client")}
+            />
+          </Form.Group>
+
           <Form.Button
             data-cy="save-poll"
             basic
@@ -126,7 +149,7 @@ const CreatePollsForm = () => {
             floated="right"
             id="button"
           >
-            Save Poll
+            Save Feature
           </Form.Button>
         </Form>
         {image && (

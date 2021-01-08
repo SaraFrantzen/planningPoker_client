@@ -15,6 +15,7 @@ const App = () => {
       <MainHeader />
       <Switch>
         <Route exact path="/" component={PollsIndex} />
+        <Route exact path="/category/:category" component={PollsIndex} />
         <Route exact path="/login" component={LoginForm} />
         <Route exact path="/polls/:id" component={SinglePoll} />
  
@@ -22,7 +23,8 @@ const App = () => {
           <Route exact path="/create" component={CreatePollsForm} />
         ) : (
           <Redirect to="/login" />
-        )}
+        )} 
+       
       </Switch>
     </>
   );

@@ -49,7 +49,6 @@ const SinglePoll = () => {
         setStatus(response.points);
         setState(response.state);
         setTeam(response.team);
-        debugger;
         setResult(response.result);
         if (response.votes != null) {
           setVotes(response.votes);
