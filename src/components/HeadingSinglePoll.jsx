@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Divider } from "semantic-ui-react";
 
-const HeadingSinglePoll = ({ userVoted, joined, authenticated }) => {
+const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
   return (
     <>
-      {authenticated && !joined && (
+      {authenticated && !joined && state !== "closed" && (
         <>
           <Container id="header">
             <h1>You need to join the poll to be able to vote</h1>
@@ -12,7 +12,7 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated }) => {
           </Container>
         </>
       )}
-      {!authenticated && (
+      {!authenticated && state !== "closed" && (
         <>
           <Container id="header">
             <h1>You need to login to be able to vote</h1>
@@ -20,15 +20,27 @@ const HeadingSinglePoll = ({ userVoted, joined, authenticated }) => {
           </Container>
         </>
       )}
-      {joined && !userVoted && (
+      {joined && !userVoted && state !== "closed" && (
         <Container id="header" data-cy="join-poll-message" color="black">
           <h1>You are joined to this poll</h1>
           <Divider />
         </Container>
       )}
-      {joined && userVoted && (
+      {joined && userVoted &&  state === "ongoing" &&(
         <Container id="header" data-cy="user-vote-message" color="black">
           <h1>You voted: {userVoted} in this poll</h1>
+          <Divider />
+        </Container>
+      )}
+        {state === "pending" && (
+        <Container id="header" data-cy="poll-closed-message" color="black">
+          <h1>Poll is open for discussion. Points are pending </h1>
+          <Divider />
+        </Container>
+      )}
+       {state === "closed" && (
+        <Container id="header" data-cy="poll-closed-message" color="black">
+          <h1>This poll is closed</h1>
           <Divider />
         </Container>
       )}

@@ -11,6 +11,7 @@ import HeadingSinglePoll from "./HeadingSinglePoll";
 import VotingStatus from "./VotingStatus";
 import CloseVoting from "./CloseVoting";
 import ViewVotesResult from "./ViewVotesResult";
+import ClosePoll from "./ClosePoll";
 import {
   Container,
   Card,
@@ -38,6 +39,7 @@ const SinglePoll = () => {
   const [status3, setStatus3] = useState(0);
   const [state, setState] = useState("");
   const [votes, setVotes] = useState([]);
+  const [result, setResult] = useState();
 
   useEffect(() => {
     const getSinglePoll = async () => {
@@ -46,7 +48,9 @@ const SinglePoll = () => {
         setPoll(response);
         setStatus(response.points);
         setState(response.state);
-        setTeam(response.team)
+        setTeam(response.team);
+        debugger;
+        setResult(response.result);
         if (response.votes != null) {
           setVotes(response.votes);
           if (currentUser.name in response.votes) {
@@ -103,6 +107,7 @@ const SinglePoll = () => {
         userVoted={userVoted}
         joined={joined}
         authenticated={authenticated}
+        state={state}
       />
       {voteMessage && (
         <Container>
@@ -155,6 +160,13 @@ const SinglePoll = () => {
 
                   <Card.Content id="tasks">Tasks </Card.Content>
                   <Card.Content data-cy="tasks">{poll.tasks}</Card.Content>
+                  {result && (
+                    <>
+                      <Divider />
+                      <Card.Content id="description">Points</Card.Content>
+                      {result}
+                    </>
+                  )}
                 </Card.Content>
               </Card>
             </Grid.Column>
@@ -166,18 +178,21 @@ const SinglePoll = () => {
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
                 </Card.Content>
+                {state !== "closed" && (
+                  <>
+                    <Card.Content data-cy="points">
+                      <VotingStatus
+                        status0={status0}
+                        status1={status1}
+                        status2={status2}
+                        status3={status3}
+                      />
+                    </Card.Content>
+                  </>
+                )}
 
-                <Card.Content data-cy="points">
-                  <VotingStatus
-                    status0={status0}
-                    status1={status1}
-                    status2={status2}
-                    status3={status3}
-                  />
-
-                  <Divider />
-
-                  {state !== "pending" ? (
+                <Card.Content>
+                  {state === "ongoing" ? (
                     <Vote
                       voteToggle={voteToggle}
                       joined={joined}
@@ -197,10 +212,20 @@ const SinglePoll = () => {
                     />
                   ) : (
                     <>
-                      <Message color="black">poll is closed</Message>
+                      {state === "pending" && (
+                        <Message color="black">voting is closed</Message>
+                      )}
+                        {state === "closed" && (
+                        <Message color="black">Poll is completed</Message>
+                      )}
+                      <ClosePoll
+                        setState={setState}
+                        setResult={setResult}
+                        state={state}
+                      />
                     </>
                   )}
-                  {state !== "pending" && (
+                  {state === "ongoing" && (
                     <JoinPoll
                       joined={joined}
                       setJoined={setJoined}
@@ -210,7 +235,7 @@ const SinglePoll = () => {
                   )}
 
                   <Divider />
-                  {joined && state !== "pending" && (
+                  {joined && state === "ongoing" && (
                     <>
                       <CloseVoting setState={setState} setVotes={setVotes} />
                       <Divider />
@@ -229,7 +254,7 @@ const SinglePoll = () => {
         </Grid>
       </Container>
 
-      {state === "pending" && (
+      {state !== "ongoing" && (
         <Container>
           <Divider id="comments-divider" />
           <CommentForm />

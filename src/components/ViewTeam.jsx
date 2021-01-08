@@ -19,7 +19,7 @@ const ViewTeam = ({ joined, team }) => {
               id="button"
               color="black"
             >
-              View participants
+              View team
             </Button>
             <List>
               <List.Item>

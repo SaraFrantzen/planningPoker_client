@@ -20,6 +20,7 @@
 #logout{
   font-size: 0.6em;
   color: white;
+  cursor: pointer;
 }
 #login-txt {
   font-size: 0.4em;
