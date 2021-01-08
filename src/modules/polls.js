@@ -25,7 +25,7 @@ const Polls = {
             title: title.value,
             description: description.value,
             tasks: tasks.value,
-            image: image
+            image: image,
           },
         },
         {
@@ -75,7 +75,7 @@ const Polls = {
           headers: headers,
         }
       );
-      
+
       return response.data;
     } catch (error) {
       return error.response.data.error_message;
@@ -88,7 +88,25 @@ const Polls = {
       let response = await axios.put(
         `/polls/${id}`,
         {
-          state: 'pending',
+          state: "pending",
+        },
+        {
+          headers: headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error.response.data.error_message;
+    }
+  },
+
+  async assign(id, result) {
+    let headers = JSON.parse(localStorage.getItem("J-tockAuth-Storage"));
+    try {
+      let response = await axios.put(
+        `/polls/${id}`,
+        {
+          result: result,
         },
         {
           headers: headers,
