@@ -1,70 +1,41 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Build Status](https://semaphoreci.com/api/v1/saralundkvist86/planningpoker_client/branches/master/badge.svg)](https://semaphoreci.com/saralundkvist86/planningpoker_client)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8b2f0325-ac6a-4a7c-8280-b60970595c13/deploy-status)](https://app.netlify.com/sites/epidemicplanningpoker/deploys)
 
-## Available Scripts
+CI - Semaphore | CD -  Netlify | E2E Testing - Cypress
+<br />
+# [Planning Poker](https://epidemicplanningpoker.netlify.app/) 
+The planning poker (also called scrum poker) technique is used by developers to estimate complexity of a feature. After the cards are revealed the team members vote are known to each other and they can discuss the estimates and agree to one point. Once a point is assigned to a feature, it cannot be changed
+<br />
+<br />
+In this ReactJs application can users create features for polls. Images of lo-fis can be attached to provide broader information about what has to be done.
+A url to the feature-poll is provided to be shared with the team. Visitors can also see all the polls created on the index-page of the application and sort them by category to easy find the feature to join. 
+<br />
+Team members can join the poll and hand in their votes. Each team member can only vote once but it is possible to change vote.
+How many votes each points has got are displayed in real-time but not who voted. The name of tem-members can be shown though, but only after clicking on a button and are mainly supposed to be used by the scrum master to check that everyone of the team are joined. 
+<br />
+The ability to vote can be closed by anyone of the team, after an extra confirmation as this can not be un-done. A comments field are then open for users to discuss the estimates. When agreed on a point that corresponds to the scope of the feature the point can be assigned - and the poll is complete.
+<br />
+<br />
 
-In the project directory, you can run:
+### Built with
+React version 17.0.1 | Semantic-ui-react 2.0.1
 
-### `yarn start`
+### Tested with 
+Cypress 4.0.2
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### The Backend
+This ReactJs client is hosted by a Ruby on Rails server: [Planning Poker api](https://github.com/Saralundkvist86/planningPoker_api)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Setup
+To use this application, fork this repository to your own GitHub account and clone it to your local workspace.
 
-### `yarn test`
+Install all of the dependencies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+``` $ yarn install ```
 
-### `yarn build`
+Run tests using Cypress:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+``` $ yarn cypress ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
