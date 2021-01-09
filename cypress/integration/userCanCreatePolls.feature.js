@@ -29,7 +29,6 @@ describe("User can create poll", () => {
         cy.get('[data-cy="api"]').click({ multiple: true });
       });
       cy.file_upload("img.jpeg", "[data-cy='image-upload']", "image/jpeg");
-
       cy.get('[data-cy="save-poll"]').contains("Save Feature").click();
       cy.get('[data-cy="save-poll-message"]').should(
         "contain",

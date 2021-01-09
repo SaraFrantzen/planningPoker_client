@@ -4,7 +4,7 @@ import { Container, Divider } from "semantic-ui-react";
 const HeadingSinglePoll = ({ userVoted, joined, authenticated, state }) => {
   return (
     <>
-      {authenticated && !joined && state !== "closed" && (
+      {authenticated && !joined && state === "ongoing" && (
         <>
           <Container id="heading">
             <h1>You need to join the poll to be able to vote</h1>

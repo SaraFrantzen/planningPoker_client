@@ -6,7 +6,6 @@ describe("visitor can see all listed polls", () => {
       url: "http://localhost:3000/api/polls",
       response: "fixture:polls.json",
     });
-
     cy.visit("/");
   });
 

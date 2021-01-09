@@ -19,7 +19,7 @@ describe("User can post comment", () => {
       cy.route({
         method: "POST",
         url: "http://localhost:3000/api/comments",
-         response: "fixture:commentsPost.json",
+        response: "fixture:commentsPost.json",
       });
     });
 
@@ -46,17 +46,19 @@ describe("User can post comment", () => {
       cy.route({
         method: "POST",
         url: "http://localhost:3000/api/comments",
-        response: { message: "You need to sign in or sign up before continuing." },
+        response: {
+          message: "You need to sign in or sign up before continuing.",
+        },
       });
     });
 
-    it("without comments body", () => {  
-    cy.get("[data-cy='poll-1']").click();
-    cy.get('[data-cy="form-comment"]').should("not.exist")
-    cy.get('[data-cy="authenticate-message"]').should(
-      "contain",
-      "You need to login to be able to post comments"
-    );
+    it("without comments body", () => {
+      cy.get("[data-cy='poll-1']").click();
+      cy.get('[data-cy="form-comment"]').should("not.exist");
+      cy.get('[data-cy="authenticate-message"]').should(
+        "contain",
+        "You need to login to be able to post comments"
+      );
     });
   });
 });

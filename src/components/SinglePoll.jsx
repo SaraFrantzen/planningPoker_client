@@ -30,7 +30,6 @@ const SinglePoll = () => {
   const [joined, setJoined] = useState(false);
   const [team, setTeam] = useState([]);
   const [voteMessage, setVoteMessage] = useState("");
-/*   const [status, setStatus] = useState([]); */
   const [voteToggle, setVoteToggle] = useState(true);
   const [userVoted, setUserVoted] = useState();
   const [status0, setStatus0] = useState(0);
@@ -40,24 +39,19 @@ const SinglePoll = () => {
   const [state, setState] = useState("");
   const [votes, setVotes] = useState({});
   const [result, setResult] = useState();
-
-  const [superArray, setSuperArray] = useState([])
-  
+  const [votedPointsArray, setVotedPointsArray] = useState([]);
 
   useEffect(() => {
     const getSinglePoll = async () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
-  
         setState(response.state);
         setTeam(response.team);
         setResult(response.result);
         if (response.votes != null) {
           setVotes(response.votes);
-
-          setSuperArray(Object.values(response.votes))
-
+          setVotedPointsArray(Object.values(response.votes));
           if (currentUser.name in response.votes) {
             setUserVoted(response.votes[currentUser.name]);
             setVoteToggle(false);
@@ -83,19 +77,16 @@ const SinglePoll = () => {
     teamChecker();
   }, [currentUser, poll]);
 
-  /* const pointsArray = Object.values(votes); */
-
   useEffect(() => {
-    debugger
-    let statusCounter = superArray;
+    let statusCounter = votedPointsArray;
     let zero = 0;
     let one = 0;
     let two = 0;
     let three = 0;
-    setStatus0(0)
-    setStatus1(0)
-    setStatus2(0)
-    setStatus3(0)
+    setStatus0(0);
+    setStatus1(0);
+    setStatus2(0);
+    setStatus3(0);
     for (let i = 0; i < statusCounter.length; i++) {
       if (statusCounter[i] === 0) {
         zero++;
@@ -111,7 +102,7 @@ const SinglePoll = () => {
         setStatus3(three);
       }
     }
-  }, [superArray]);
+  }, [votedPointsArray]);
 
   return (
     <>
@@ -186,7 +177,7 @@ const SinglePoll = () => {
             <Grid.Column width={6}>
               <Card fluid id="singlePoll-card" color="red">
                 <Card.Content>
-                  {superArray !== [] && (
+                  {votedPointsArray !== [] && (
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
                 </Card.Content>
@@ -205,25 +196,14 @@ const SinglePoll = () => {
 
                 <Card.Content>
                   {authenticated && state === "ongoing" ? (
-  <Vote
-  setVotes={setVotes}
-  votes={votes}
+                    <Vote
                       voteToggle={voteToggle}
                       joined={joined}
-                      setSuperArray={setSuperArray}
-                     superArray={superArray}
+                      setVotedPointsArray={setVotedPointsArray}
                       setVoteMessage={setVoteMessage}
                       setUserVoted={setUserVoted}
                       setVoteToggle={setVoteToggle}
                       setMessage={setMessage}
-                      setStatus0={setStatus0}
-                      setStatus1={setStatus1}
-                      setStatus2={setStatus2}
-                      setStatus3={setStatus3}
-                      status0={status0}
-                      status1={status1}
-                      status2={status2}
-                      status3={status3}
                     />
                   ) : (
                     <>
