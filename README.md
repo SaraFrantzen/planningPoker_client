@@ -27,6 +27,13 @@ Cypress 4.0.2
 ### The Backend
 This ReactJs client is hosted by a Ruby on Rails server: [Planning Poker api](https://github.com/Saralundkvist86/planningPoker_api)
 
+#### Dependencies
+- Yarn
+- Cypress
+- React, React-Redux, Semantic UI React
+- Axios
+- J-tockauth
+
 #### Setup
 To use this application, fork this repository to your own GitHub account and clone it to your local workspace.
 
