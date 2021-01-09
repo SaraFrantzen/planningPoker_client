@@ -28,6 +28,7 @@ Cypress.Commands.add("login", () => {
     response: `fixture:successful_login.json`,
     headers: {
       uid: `user@epidemic.com`,
+      name: "user"
     },
   });
 
@@ -43,8 +44,11 @@ Cypress.Commands.add("login", () => {
     response: `fixture:successful_login.json`,
     headers: {
       uid: `user@epidemic.com`,
+      name: "user"
     },
   });
+
+
 	cy.visit("/");
 	cy.get('[data-cy="login"]').click();
   cy.get("[data-cy='login-form']").within(() => {

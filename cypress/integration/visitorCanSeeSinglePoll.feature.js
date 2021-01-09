@@ -40,16 +40,15 @@ describe("Visitor can see a specific poll", () => {
       });
       cy.visit("/");
     });
+    
     it("visitor can click on an poll and view its full content", () => {
       cy.get("[data-cy='poll-1']").click();
       cy.get("[data-cy='tasks']").should(
         "contain",
         "Index action. Routes to that action. Polls model: title, description. Polls index in serializer."
       );
-      cy.get("[data-cy='points-2']").should("contain", "1");
       cy.get("[data-cy='image']").should("not.be.visible");
       cy.get("[data-cy='poker-logo']").should("be.visible");
-      
     });
   });
 

@@ -39,6 +39,7 @@ const CreatePollsForm = () => {
       category
     );
     if (response.message) {
+      debugger
       setMessage(response.message);
       setPollId(response.id);
       setErrormessage("");
@@ -94,7 +95,7 @@ const CreatePollsForm = () => {
         </Grid>
       </Container>
 
-      <Container>
+      <Container className="margin-container">
         <Form data-cy="form-poll" id="create-poll" onSubmit={onSubmit}>
           <Form.Input
             fluid
@@ -127,14 +128,14 @@ const CreatePollsForm = () => {
           <Form.Group inline>
             <label>Category</label>
             <Form.Checkbox
-            data-cy="api"
+              data-cy="api"
               label="api"
               value="a"
               checked={value === "api"}
               onChange={() => setValue("api")}
             />
             <Form.Checkbox
-             data-cy="client"
+              data-cy="client"
               label="client"
               value="c"
               checked={value === "client"}

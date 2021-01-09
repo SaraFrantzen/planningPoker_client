@@ -8,21 +8,12 @@ const Vote = ({
   joined,
   setVoteToggle,
   voteToggle,
-  setStatus,
+  setVotedPointsArray,
   setVoteMessage,
   setUserVoted,
   setMessage,
-  setStatus0,
-  setStatus1,
-  setStatus2,
-  setStatus3,
-  status0,
-  status1,
-  status2,
-  status3,
 }) => {
   const [selectedPoints, setSelectedPoints] = useState();
-  const [votes, setVotes] = useState({});
   const { id } = useParams();
   const authenticated = useSelector((state) => state.authenticate);
   const currentUser = useSelector((state) => state.currentUser);
@@ -33,49 +24,18 @@ const Vote = ({
 
   const voteHandler = async () => {
     let points = selectedPoints;
-    const response = await Polls.vote(id, points, votes);
+    const response = await Polls.vote(id, points);
     if (response.message === "successfully voted") {
-      setVoteMessage(
-        `You ${response.message} ${
-          response.votes[currentUser.name]
-        } in this poll`
-      );
-      setStatus(response.points);
-      setVotes(response.votes);
+      setVoteMessage("")
       setVoteToggle(false);
       setUserVoted(response.votes[currentUser.name]);
-
       setMessage("");
+      setVotedPointsArray(Object.values(response.votes));
     } else if (response.message === "successfully un-voted") {
       setVoteMessage("Your previous vote is now removed");
       setMessage("");
-      setStatus(response.points);
+      setVotedPointsArray(Object.values(response.votes));
       setUserVoted();
-      setStatus0(status0 - 1);
-      setStatus1(status1 - 1);
-      setStatus2(status2 - 1);
-      setStatus3(status3 - 1);
-      let statusCounter = response.points;
-      let zero = 0;
-      let one = 0;
-      let two = 0;
-      let three = 0;
-      for (let i = 0; i < statusCounter.length; i++) {
-        if (statusCounter[i] === 0) {
-          zero++;
-          setStatus0(zero);
-        } else if (statusCounter[i] === 1) {
-          one++;
-          setStatus1(one);
-        } else if (statusCounter[i] === 2) {
-          two++;
-          setStatus2(two);
-        } else if (statusCounter[i] === 3) {
-          three++;
-          setStatus3(three);
-        }
-      }
-      setVotes(response.votes);
       setVoteToggle(true);
     } else {
       setMessage(response);

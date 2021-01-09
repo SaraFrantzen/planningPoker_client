@@ -12,6 +12,7 @@ const PollsIndex = () => {
   const { category } = useParams();
   const authenticated = useSelector((state) => state.authenticate);
   const [errorMessage, setErrorMessage] = useState("");
+  
   useEffect(() => {
     const getPollsIndex = async () => {
       const response = await Polls.index(category);
@@ -49,7 +50,7 @@ const PollsIndex = () => {
             data-cy="createPoll"
             id="create-button"
           >
-            Create new poll
+           Create new feature for poll
           </Button>
         )}
       </Container>

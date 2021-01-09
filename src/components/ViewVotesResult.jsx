@@ -4,15 +4,16 @@ import { Button, List, Grid } from "semantic-ui-react";
 const ViewVotesResult = ({ votes }) => {
   const names = Object.keys(votes);
   const points = Object.values(votes);
-
   const [listOfNames, setListOfNames] = useState();
   const [listOfPoints, setListOfPoints] = useState();
+ 
   const ViewVotesHandler = async () => {
     let listNames = names.map((name) => <li>{name}: </li>);
     let listPoints = points.map((point) => <li>{point}</li>);
     setListOfNames(listNames);
     setListOfPoints(listPoints);
   };
+  
   return (
     <>
       <>

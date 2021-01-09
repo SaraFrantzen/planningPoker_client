@@ -16,7 +16,6 @@ describe("visitor can see all listed polls", () => {
       url: "http://localhost:3000/api/polls/?category=client",
       response: "fixture:polls_category_client.json",
     });
-
     cy.visit("/");
   });
 
@@ -36,7 +35,7 @@ describe("visitor can see all listed polls", () => {
       });
     });
   });
-  
+
   context("successfully - client", () => {
     it("Visitor can see the polls in the client category", () => {
       cy.get("[data-cy='client']").click();

@@ -12,6 +12,7 @@ import VotingStatus from "./VotingStatus";
 import CloseVoting from "./CloseVoting";
 import ViewVotesResult from "./ViewVotesResult";
 import ClosePoll from "./ClosePoll";
+import votingStatusCalculator from "../modules/votingStatusCalculator";
 import {
   Container,
   Card,
@@ -30,7 +31,6 @@ const SinglePoll = () => {
   const [joined, setJoined] = useState(false);
   const [team, setTeam] = useState([]);
   const [voteMessage, setVoteMessage] = useState("");
-  const [status, setStatus] = useState([]);
   const [voteToggle, setVoteToggle] = useState(true);
   const [userVoted, setUserVoted] = useState();
   const [status0, setStatus0] = useState(0);
@@ -38,20 +38,21 @@ const SinglePoll = () => {
   const [status2, setStatus2] = useState(0);
   const [status3, setStatus3] = useState(0);
   const [state, setState] = useState("");
-  const [votes, setVotes] = useState([]);
+  const [votes, setVotes] = useState({});
   const [result, setResult] = useState();
+  const [votedPointsArray, setVotedPointsArray] = useState([]);
 
   useEffect(() => {
     const getSinglePoll = async () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
-        setStatus(response.points);
         setState(response.state);
         setTeam(response.team);
         setResult(response.result);
         if (response.votes != null) {
           setVotes(response.votes);
+          setVotedPointsArray(Object.values(response.votes));
           if (currentUser.name in response.votes) {
             setUserVoted(response.votes[currentUser.name]);
             setVoteToggle(false);
@@ -78,27 +79,15 @@ const SinglePoll = () => {
   }, [currentUser, poll]);
 
   useEffect(() => {
-    let statusCounter = status;
-    let zero = 0;
-    let one = 0;
-    let two = 0;
-    let three = 0;
-    for (let i = 0; i < statusCounter.length; i++) {
-      if (statusCounter[i] === 0) {
-        zero++;
-        setStatus0(zero);
-      } else if (statusCounter[i] === 1) {
-        one++;
-        setStatus1(one);
-      } else if (statusCounter[i] === 2) {
-        two++;
-        setStatus2(two);
-      } else if (statusCounter[i] === 3) {
-        three++;
-        setStatus3(three);
-      }
-    }
-  }, [status]);
+    let statusCounter = votedPointsArray;
+    votingStatusCalculator(
+      setStatus0,
+      setStatus1,
+      setStatus2,
+      setStatus3,
+      statusCounter
+    );
+  }, [votedPointsArray]);
 
   return (
     <>
@@ -173,7 +162,7 @@ const SinglePoll = () => {
             <Grid.Column width={6}>
               <Card fluid id="singlePoll-card" color="red">
                 <Card.Content>
-                  {status !== [] && (
+                  {votedPointsArray !== [] && (
                     <Card.Content id="poll-status">Poll status</Card.Content>
                   )}
                 </Card.Content>
@@ -195,19 +184,11 @@ const SinglePoll = () => {
                     <Vote
                       voteToggle={voteToggle}
                       joined={joined}
-                      setStatus={setStatus}
+                      setVotedPointsArray={setVotedPointsArray}
                       setVoteMessage={setVoteMessage}
                       setUserVoted={setUserVoted}
                       setVoteToggle={setVoteToggle}
                       setMessage={setMessage}
-                      setStatus0={setStatus0}
-                      setStatus1={setStatus1}
-                      setStatus2={setStatus2}
-                      setStatus3={setStatus3}
-                      status0={status0}
-                      status1={status1}
-                      status2={status2}
-                      status3={status3}
                     />
                   ) : (
                     <>
@@ -265,7 +246,7 @@ const SinglePoll = () => {
       </Container>
 
       {state !== "ongoing" && (
-        <Container>
+        <Container className="margin-container">
           <Divider id="comments-divider" />
           <CommentForm />
         </Container>

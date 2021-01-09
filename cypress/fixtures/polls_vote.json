@@ -1,5 +1,4 @@
 {
   "message": "successfully voted",
-  "points": [2],
-  "votes": { "user": 2 }
+  "votes": { "myName": 2 }
 }

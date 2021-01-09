@@ -25,7 +25,6 @@ describe("User can re-vote", () => {
     cy.login();
     cy.get("[data-cy='poll-1']").click();
     cy.get('[data-cy="join-poll"]').click();
-
     cy.get('[data-cy="vote-select"]').contains(2).click({ force: true });
     cy.get('[data-cy="vote"]').click();
   });
@@ -45,7 +44,7 @@ describe("User can re-vote", () => {
         "contain",
         "Your previous vote is now removed"
       );
-      cy.get("[data-cy='points-2']").should("contain", 1);
+      cy.get("[data-cy='points-2']").should("not.exist");
       cy.get('[data-cy="vote"]').should("be.visible");
       cy.get('[data-cy="user-vote-message"]').should("not.exist");
       cy.get('[data-cy="join-poll-message"]').should(
