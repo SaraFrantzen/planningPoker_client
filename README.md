@@ -1,6 +1,7 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/saralundkvist86/planningpoker_client/branches/master/badge.svg)](https://semaphoreci.com/saralundkvist86/planningpoker_client)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8b2f0325-ac6a-4a7c-8280-b60970595c13/deploy-status)](https://app.netlify.com/sites/epidemicplanningpoker/deploys)
+[![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
 
 CI - Semaphore | CD -  Netlify | E2E Testing - Cypress
 <br />
