@@ -7,13 +7,16 @@ import UserSession from "../modules/auth";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [message, setMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const register = async (e) => {
     e.preventDefault();
     const response = await UserSession.login(e, dispatch, history);
-    setMessage(response);
-    history.replace({ pathname: "/" });
+    if (response.success) {
+      history.replace({ pathname: "/" });
+    } else {
+      setErrorMessage(response);
+    }
   };
 
   return (
@@ -25,7 +28,12 @@ const LoginForm = () => {
         <Divider />
       </Container>
 
-      <Container>
+      <Container className="login-container">
+        {errorMessage && (
+          <Message data-cy="error-message" color="red" id="message">
+            {errorMessage}
+          </Message>
+        )}
         <Form data-cy="login-form" onSubmit={register} id="login-form">
           <Form.Input
             icon="user"
@@ -54,11 +62,6 @@ const LoginForm = () => {
             color="red"
           />
         </Form>
-        {message && (
-          <Message data-cy="message" color="red">
-            {message}
-          </Message>
-        )}
       </Container>
     </>
   );

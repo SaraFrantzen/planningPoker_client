@@ -25,6 +25,8 @@ const UserSession = {
           authenticate: true,
         },
       });
+      
+      return response
     } catch (error) {
       return error.response.data.errors[0];
     }

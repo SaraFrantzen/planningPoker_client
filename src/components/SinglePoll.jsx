@@ -12,7 +12,7 @@ import VotingStatus from "./VotingStatus";
 import CloseVoting from "./CloseVoting";
 import ViewVotesResult from "./ViewVotesResult";
 import ClosePoll from "./ClosePoll";
-import votingStatusCalculator from '../modules/votingStatusCalculator';
+import votingStatusCalculator from "../modules/votingStatusCalculator";
 import {
   Container,
   Card,
@@ -47,7 +47,6 @@ const SinglePoll = () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
-        debugger
         setState(response.state);
         setTeam(response.team);
         setResult(response.result);
@@ -81,7 +80,13 @@ const SinglePoll = () => {
 
   useEffect(() => {
     let statusCounter = votedPointsArray;
-    votingStatusCalculator(setStatus0, setStatus1, setStatus2, setStatus3, statusCounter)
+    votingStatusCalculator(
+      setStatus0,
+      setStatus1,
+      setStatus2,
+      setStatus3,
+      statusCounter
+    );
   }, [votedPointsArray]);
 
   return (

@@ -33,7 +33,12 @@ describe("User can assign result to poll", () => {
     it("user can assign value", () => {
       cy.get('[data-cy="assign"]').click();
       cy.get('[data-cy="value-select"]').contains(2).click({ force: true });
-      cy.get('[data-cy="submit"]').click();
+
+       cy.get('[data-cy="submit"]').click();
+     
+
+
+      
       cy.visit("/");
       cy.get("[data-cy='poll-1']").click();
       cy.get('[data-cy="poll-closed-message"]').should(
