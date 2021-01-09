@@ -38,4 +38,8 @@ Run tests using Cypress:
 
 ``` $ yarn cypress ```
 
+Start the server (port: 3001) :
+
+``` $ yarn start ```
+
 
