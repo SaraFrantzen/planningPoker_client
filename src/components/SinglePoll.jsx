@@ -47,6 +47,7 @@ const SinglePoll = () => {
       const response = await Polls.show(id);
       if (response.id) {
         setPoll(response);
+        debugger
         setState(response.state);
         setTeam(response.team);
         setResult(response.result);
@@ -240,7 +241,7 @@ const SinglePoll = () => {
       </Container>
 
       {state !== "ongoing" && (
-        <Container>
+        <Container className="margin-container">
           <Divider id="comments-divider" />
           <CommentForm />
         </Container>

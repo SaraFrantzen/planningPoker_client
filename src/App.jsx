@@ -6,7 +6,7 @@ import LoginForm from "./components/LoginForm";
 import CreatePollsForm from "./components/CreatePollsForm";
 import { useSelector } from "react-redux";
 import SinglePoll from './components/SinglePoll';
-
+import Footer from './components/Footer';
 
 const App = () => {
   const authenticated = useSelector((state) => state.authenticate);
@@ -26,6 +26,7 @@ const App = () => {
         )} 
        
       </Switch>
+      <Footer />
     </>
   );
 };

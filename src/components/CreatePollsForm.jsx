@@ -39,6 +39,7 @@ const CreatePollsForm = () => {
       category
     );
     if (response.message) {
+      debugger
       setMessage(response.message);
       setPollId(response.id);
       setErrormessage("");
@@ -94,7 +95,7 @@ const CreatePollsForm = () => {
         </Grid>
       </Container>
 
-      <Container>
+      <Container className="margin-container">
         <Form data-cy="form-poll" id="create-poll" onSubmit={onSubmit}>
           <Form.Input
             fluid
