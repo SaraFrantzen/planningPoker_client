@@ -12,6 +12,7 @@ const PollsIndex = () => {
   const { category } = useParams();
   const authenticated = useSelector((state) => state.authenticate);
   const [errorMessage, setErrorMessage] = useState("");
+  
   useEffect(() => {
     const getPollsIndex = async () => {
       const response = await Polls.index(category);

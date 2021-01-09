@@ -11,7 +11,6 @@ const Polls = {
       }
       return result.data;
     } catch (error) {
-      
       return error.response.data.error;
     }
   },
@@ -79,14 +78,12 @@ const Polls = {
       let response = await axios.put(
         `/polls/${id}`,
         {
-       
           votes: { name, user },
         },
         {
           headers: headers,
         }
       );
-
       return response.data;
     } catch (error) {
       return error.response.data.error_message;

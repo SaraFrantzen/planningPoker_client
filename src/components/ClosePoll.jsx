@@ -6,8 +6,7 @@ import Polls from "../modules/polls";
 const ClosePoll = ({ setState, setResult, state }) => {
   const [toggleSelect, setToggleSelect] = useState(false);
   const [selectedPoints, setSelectedPoints] = useState();
-
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
 
   const assignPointsHandler = async () => {
@@ -15,7 +14,6 @@ const ClosePoll = ({ setState, setResult, state }) => {
     const response = await Polls.assign(id, result);
     if (response.message) {
       setState(response.state);
-
       setResult(response.result);
     } else {
       setErrorMessage(response);

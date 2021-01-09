@@ -14,7 +14,6 @@ const MainHeader = () => {
 
   const signOutHandler = async () => {
     const response = await UserSession.logout(dispatch, history);
-
     history.replace({ pathname: "/" });
     return response;
   };
@@ -36,13 +35,13 @@ const MainHeader = () => {
                 </Menu.Item>
               </Grid.Column>
               <Grid.Column width={5}>
-               {authenticated && (
-                 <Menu.Item floated="right">
-                  <p id="login-txt">
-                    You're logged in with: {currentUser.email}
-                  </p>
-                </Menu.Item>
-               )} 
+                {authenticated && (
+                  <Menu.Item floated="right">
+                    <p id="login-txt">
+                      You're logged in with: {currentUser.email}
+                    </p>
+                  </Menu.Item>
+                )}
               </Grid.Column>
             </Grid.Row>
           </Grid>

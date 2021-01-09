@@ -127,14 +127,14 @@ const CreatePollsForm = () => {
           <Form.Group inline>
             <label>Category</label>
             <Form.Checkbox
-            data-cy="api"
+              data-cy="api"
               label="api"
               value="a"
               checked={value === "api"}
               onChange={() => setValue("api")}
             />
             <Form.Checkbox
-             data-cy="client"
+              data-cy="client"
               label="client"
               value="c"
               checked={value === "client"}

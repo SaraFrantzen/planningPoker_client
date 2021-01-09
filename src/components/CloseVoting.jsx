@@ -6,21 +6,19 @@ import Polls from "../modules/polls";
 const CloseVoting = ({ setState, setVotes }) => {
   const [confirm, setConfirm] = useState(false);
   const { id } = useParams();
-  const [votingIsOpen, setvotingIsOpen] = useState(true)
-const [errorMessage, setErrorMessage] = useState("")
+  const [votingIsOpen, setvotingIsOpen] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const closeVoteHandler = async () => {
     let response = await Polls.close(id);
     if (response.message) {
       setState(response.state);
-      setVotes(response.votes)
-      setvotingIsOpen(false)
+      setVotes(response.votes);
+      setvotingIsOpen(false);
     } else {
       setErrorMessage(response);
     }
   };
-
-
 
   return (
     <>
@@ -60,15 +58,14 @@ const [errorMessage, setErrorMessage] = useState("")
             End vote
           </Button>
           {errorMessage && (
-             <Message data-cy="error-message" color="red">
-           {errorMessage}
-           </Message>
+            <Message data-cy="error-message" color="red">
+              {errorMessage}
+            </Message>
           )}
         </>
       )}
-  
     </>
   );
 };
 
-export default CloseVoting 
+export default CloseVoting;
